@@ -1,0 +1,16 @@
+.content {
+    grid-area: c;
+    background-color: #E1D718B2;
+}
+
+.posts {
+    margin: 0 auto;
+    width: 90%;
+    border: 1px solid #7d92b9;
+    border-radius: 20px;
+}
+
+.item {
+    margin-left: 25px;
+    color: rgba(8, 83, 231, 0.9);
+}

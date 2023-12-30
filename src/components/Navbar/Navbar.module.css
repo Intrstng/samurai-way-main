@@ -1,0 +1,19 @@
+.nav {
+    grid-area: n;
+    background-color: #e8590c;
+}
+
+.item a {
+    color: #FFFFFF;
+    font-size: 20px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.item:hover a {
+    color: #a4b97d;
+}
+
+.item:active a {
+    color: #7d92b9;
+}
