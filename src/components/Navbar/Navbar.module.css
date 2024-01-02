@@ -17,3 +17,7 @@
 .item:active a {
     color: #7d92b9;
 }
+
+.item a.active {
+    color: #316f7b;
+}
