@@ -1,13 +1,17 @@
-import React from 'react';
-import S from './Profile.module.css';
+import React, {FC} from 'react';
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
+import {PostItem} from '../../App';
 
-export const Profile = () => {
+type ProfileProps = {
+    posts: PostItem[]
+}
+
+export const Profile: FC<ProfileProps> = (props) => {
     return (
         <>
             <ProfileInfo />
-            <MyPosts />
+            <MyPosts posts={props.posts}/>
         </>
     );
 };

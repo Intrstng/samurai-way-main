@@ -1,8 +1,24 @@
-import React from 'react';
+import React, {FC} from 'react';
 import S from './MyPosts.module.css';
 import {Post} from './Post/Post';
+import {v1} from 'uuid';
+import {PostItem} from '../../../App';
 
-export const MyPosts = () => {
+// type PostItem = {
+//     id: string
+//     message: string
+//     likesCount: number
+// }
+
+type MyPostsProps = {
+    posts: PostItem[]
+}
+
+export const MyPosts: FC<MyPostsProps> = (props) => {
+    const postsElements = props.posts.map(p => <Post key={p.id}
+                                                  id={p.id}
+                                                  message={p.message}
+                                                  likesCount={p.likesCount}/>)
     return (
         <>
             <div className={S.posts}>
@@ -11,10 +27,7 @@ export const MyPosts = () => {
                 <button>Send</button>
             </div>
             <div className={S.postItems}>
-                <Post message={'Post 1'}
-                      likes={15}/>
-                <Post message={'Post 2'}
-                      likes={25}/>
+                {postsElements}
             </div>
         </>
     );

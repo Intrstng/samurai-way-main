@@ -2,8 +2,9 @@ import React, {FC} from 'react';
 import S from './Post.module.css';
 
 type PostProps = {
+    id: string
     message: string
-    likes: number
+    likesCount: number
 }
 
 export const Post: FC<PostProps> = (props) => {
@@ -11,7 +12,7 @@ export const Post: FC<PostProps> = (props) => {
         <div className={S.wrapper}>
             <img src={'https://iconape.com/wp-content/png_logo_vector/avatar-9.png'} alt={'avatar-post'}/>
             <p className={S.item}>{props.message}</p>
-            <p>likes: {props.likes}</p>
+            <p>likes: {props.likesCount}</p>
         </div>
 
     );

@@ -13,26 +13,6 @@
     border-right: 1px solid grey;
 }
 
-.dialog {
-    cursor: pointer;
-}
-
-.dialog a {
-    text-decoration: none;
-}
-
-.dialog:hover {
-    opacity: 0.7;
-}
-
 .messages {
     padding: 10px;
-}
-
-.message {
-
-}
-
-.active {
-    color: rgba(8, 83, 231, 0.9);
 }
