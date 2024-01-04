@@ -3,6 +3,10 @@
     background-color: #e8590c;
 }
 
+.nav ul {
+    padding-left: 20px;
+}
+
 .item a {
     color: #FFFFFF;
     font-size: 20px;

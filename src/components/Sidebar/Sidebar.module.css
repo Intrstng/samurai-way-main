@@ -1,0 +1,42 @@
+.block {
+    grid-area: s;
+    padding: 20px;
+    background-color: #e8590c;
+}
+
+.block h3 {
+    font-size: 1.2rem;
+    color: #316f7b;
+}
+
+.items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card {
+    cursor: pointer;
+}
+
+.card img {
+    width: 40px;
+    height: 40px;
+    transition: 0.25s all ease;
+}
+
+.card p {
+    font-size: 0.8rem;
+    text-align: center;
+    transition: 0.35s all ease;
+}
+
+.card:hover img {
+    transform: scale(1.1);
+}
+
+.card:hover p {
+    color: #d7def0;
+}

@@ -1,15 +1,38 @@
 .dialog {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
     cursor: pointer;
+    gap: 10px;
+    min-width: 80px;
 }
 
 .dialog a {
+    font-size: 1.1rem;
     text-decoration: none;
 }
 
-.dialog:hover {
+.dialog img {
+    width: 40px;
+    height: 40px;
+    transition: 0.25s opacity ease;
+}
+
+.dialog:hover img {
     opacity: 0.7;
 }
 
+.dialog:hover a {
+    color: #FFFFFF;
+    transition: 0.25s color ease;
+}
+
+.dialog:active a {
+    color: rgba(144, 144, 144, 0.5);
+}
+
 .active {
-    color: rgba(8, 83, 231, 0.9);
+    color: rgb(232, 89, 12);
 }

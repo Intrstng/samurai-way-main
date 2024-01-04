@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import S from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {v1} from 'uuid';
-import {PostItem} from '../../../App';
+import {PostItem} from '../../../redux/state';
 
 // type PostItem = {
 //     id: string
