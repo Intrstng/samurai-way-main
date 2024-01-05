@@ -1,5 +1,9 @@
 import {v1} from 'uuid';
 
+let rerenderEntireTree = (state: StateType) => {
+    console.log(state)
+}
+
 export type PostItem = {
     id: string
     message: string
@@ -25,7 +29,8 @@ export type SidebarItem = {
 
 export type StateType = {
     profilePage: {
-        post: PostItem[]
+        posts: PostItem[]
+        newPostText: string
     }
     dialogsPage: {
         dialogs: DialogsItem[]
@@ -38,12 +43,13 @@ export type StateType = {
 
 export const state: StateType = {
     profilePage: {
-        post: [
+        posts: [
             {id: v1(), message: 'Post 1', likesCount: 14},
             {id: v1(), message: 'Post 2', likesCount: 11},
             {id: v1(), message: 'Post 3', likesCount: 17},
             {id: v1(), message: 'Post 4', likesCount: 9}
-        ]
+        ],
+        newPostText: ''
     },
     dialogsPage: {
         messages: [
@@ -56,7 +62,7 @@ export const state: StateType = {
             {id: v1(), name: 'Tom', src: 'https://iconape.com/wp-content/png_logo_vector/avatar-10.png'},
             {id: v1(), name: 'Joe', src: 'https://iconape.com/wp-content/files/ui/10834/png/iconfinder_2_avatar_2754578.png'},
             {id: v1(), name: 'Ann', src: 'https://iconape.com/wp-content/files/jj/10835/png/iconfinder_4_avatar_2754580.png'},
-            {id: v1(), name: 'Tyuuuyuyyuim', src: 'https://iconape.com/wp-content/files/xf/10838/png/iconfinder_7_avatar_2754582.png'}
+            {id: v1(), name: 'Tim', src: 'https://iconape.com/wp-content/files/xf/10838/png/iconfinder_7_avatar_2754582.png'}
         ]
     },
     sidebar: {
@@ -67,3 +73,28 @@ export const state: StateType = {
         ]
     }
 }
+
+
+export const addPost = () => {
+    const newPost = {
+            id: v1(),
+            message: state.profilePage.newPostText,
+            likesCount: 0
+        };
+    // console.log({...state, profilePage: {...state.profilePage, post: [...state.profilePage.post, newPost]}});
+
+    state.profilePage.posts.push(newPost);
+    updateNewPostText('');
+    rerenderEntireTree(state);
+}
+
+export const updateNewPostText = (newText: string) => {
+    // !!!!!!!!!!!!!!! //
+    state.profilePage.newPostText = newText;
+    rerenderEntireTree(state);
+}
+
+export const subscribe = (observer: any) => {
+    rerenderEntireTree = observer;
+}
+

@@ -4,14 +4,22 @@ import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {PostItem} from '../../redux/state';
 
 type ProfileProps = {
-    posts: PostItem[]
+    state: {
+        posts: PostItem[]
+        newPostText: string
+    }
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
-export const Profile: FC<ProfileProps> = (props) => {
+export const Profile: FC<ProfileProps> = ({state,  addPost, updateNewPostText}) => {
     return (
         <>
             <ProfileInfo />
-            <MyPosts posts={props.posts}/>
+            <MyPosts posts={state.posts}
+                     newPostText={state.newPostText}
+                     addPost={addPost}
+                     updateNewPostText={updateNewPostText}/>
         </>
     );
 };

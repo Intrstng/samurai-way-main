@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import './App.css';
 import {Header} from './components/Header/Header';
 import {Navbar} from './components/Navbar/Navbar';
@@ -10,35 +10,41 @@ import {Sidebar} from './components/Sidebar/Sidebar';
 
 type AppProps = {
     state: StateType
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
 }
 
 
-export const App: FC<AppProps> = ({state}) => {
-    const {profilePage, dialogsPage, sidebar} = state
+export const App: FC<AppProps> = ({state, addPost, updateNewPostText}) => {
+    const {profilePage, dialogsPage, sidebar} = state;
+
+
+
+
 
     return (
-        <BrowserRouter>
-            <div className={'app-wrapper'}>
-                <Header/>
-                <Navbar/>
-                <Sidebar friends={sidebar.friends}/>
-                <div className={'content'}>
-                    {/*<Routes>*/}
-                    {/*<Route path={'/profile'} component={Profile}/>*/}
-                    {/*<Route path={'/dialogs'} component={Dialogs}/>*/}
+        <div className={'app-wrapper'}>
+            <Header/>
+            <Navbar/>
+            <Sidebar friends={sidebar.friends}/>
+            <div className={'content'}>
+                {/*<Routes>*/}
+                {/*<Route path={'/profile'} component={Profile}/>*/}
+                {/*<Route path={'/dialogs'} component={Dialogs}/>*/}
 
 
-                    <Route path={'/profile'}
-                           render={() => <Profile posts={profilePage.post}/>}/>
-                    <Route path={'/dialogs'}
-                           render={() => <Dialogs dialogs={dialogsPage.dialogs}
-                                                  messages={dialogsPage.messages}/>}/>
+                <Route path={'/profile'}
+                       render={() => <Profile state={profilePage}
+                                              addPost={addPost}
+                                              updateNewPostText={updateNewPostText}/>}/>
+                <Route path={'/dialogs'}
+                       render={() => <Dialogs dialogs={dialogsPage.dialogs}
+                                              messages={dialogsPage.messages}/>}/>
 
-                    {/*</Routes>*/}
+                {/*</Routes>*/}
 
 
-                </div>
             </div>
-        </BrowserRouter>
+        </div>
     );
 }
