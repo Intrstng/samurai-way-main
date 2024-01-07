@@ -32,6 +32,7 @@ export type RootStateType = {
     dialogsPage: {
         dialogs: DialogsItem[]
         messages: MessageItem[]
+        newMessageBody: string
     }
     sidebar: {
         friends: SidebarItem[]
@@ -45,6 +46,7 @@ type StoreType = {
     getState: () => RootStateType
     _callSubscriber: (state: RootStateType) => void
     _updateNewPostText: (newText: string) => void //!!!!!!!!!!!!!!! //
+    _updateNewMessageText: (newText: string) => void //!!!!!!!!!!!!!!! //
     // subscribe: (observer: any) => void
     subscribe: (observer: (state: RootStateType) => void) => void
     dispatch: (action: ActionTypes) => void
@@ -73,7 +75,8 @@ export const store: StoreType = {
                 {id: v1(), name: 'Joe', src: 'https://iconape.com/wp-content/files/ui/10834/png/iconfinder_2_avatar_2754578.png'},
                 {id: v1(), name: 'Ann', src: 'https://iconape.com/wp-content/files/jj/10835/png/iconfinder_4_avatar_2754580.png'},
                 {id: v1(), name: 'Tim', src: 'https://iconape.com/wp-content/files/xf/10838/png/iconfinder_7_avatar_2754582.png'}
-            ]
+            ],
+            newMessageBody: ''
         },
         sidebar: {
             friends: [
@@ -107,16 +110,36 @@ export const store: StoreType = {
             // this._updateNewPostText(action.payload.text);
             this._state.profilePage.newPostText = action.payload.text;
             this._callSubscriber(this._state);
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+            // this._updateNewPostText(action.payload.text);
+            this._state.dialogsPage.newMessageBody = action.payload.body;
+            this._callSubscriber(this._state);
+        } else if (action.type === 'SEND-MESSAGE') {
+            const newMessage = {
+                id: v1(),
+                message: this._state.dialogsPage.newMessageBody
+            };
+            this._state.dialogsPage.messages.push(newMessage);
+            this._updateNewMessageText(''); //!!!!!!!!!!!!!!! //
+            this._callSubscriber(this._state);
         }
     },
 
     _updateNewPostText(newText) { //!!!!!!!!!!!!!!! //
         this._state.profilePage.newPostText = newText;//!!!!!!!!!!!!!!! //
         this._callSubscriber(this._state);//!!!!!!!!!!!!!!! //
+    },
+    _updateNewMessageText(newText) { //!!!!!!!!!!!!!!! //
+        this._state.dialogsPage.newMessageBody = newText;//!!!!!!!!!!!!!!! //
+        this._callSubscriber(this._state);//!!!!!!!!!!!!!!! //
     }
 }
 
-export type ActionTypes = AddPostACType | UpdateNewPostTextACType
+export type ActionTypes = AddPostACType |
+                          UpdateNewPostTextACType |
+                          UpdateNewMessageBodyACType |
+                          AddMessageACType
+
 
 type AddPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = () => {
@@ -134,6 +157,26 @@ export const updateNewPostTextAC = (newText: string) => {
         }
     } as const
 }
+
+type AddMessageACType = ReturnType<typeof sendMessageAC>
+export const sendMessageAC = () => {
+    return {
+        type: 'SEND-MESSAGE',
+    } as const
+}
+
+type UpdateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>
+export const updateNewMessageBodyAC = (newText: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-BODY',
+        payload: {
+            body: newText
+        }
+    } as const
+}
+
+
+
 
 Object.defineProperty(window, 'store', {
     value: store,

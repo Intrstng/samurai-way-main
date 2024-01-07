@@ -1,7 +1,6 @@
 import React, {FC, useRef} from 'react';
 import S from './MyPosts.module.css';
 import {Post} from './Post/Post';
-import {v1} from 'uuid';
 import {ActionTypes, addPostAC, PostItem, updateNewPostTextAC} from '../../../redux/state';
 
 type MyPostsProps = {

@@ -36,8 +36,8 @@ export const App: FC<AppProps> = ({state, dispatch}) => {
                        render={() => <Profile state={profilePage}
                                               dispatch={dispatch}/>}/>
                 <Route path={'/dialogs'}
-                       render={() => <Dialogs dialogs={dialogsPage.dialogs}
-                                              messages={dialogsPage.messages}/>}/>
+                       render={() => <Dialogs state={dialogsPage}
+                                              dispatch={dispatch}/>}/>
 
                 {/*</Routes>*/}
 
