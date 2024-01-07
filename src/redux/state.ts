@@ -1,4 +1,7 @@
 import {v1} from 'uuid';
+import {AddPostACType, profileReducer, UpdateNewPostTextACType} from './profile-reducer';
+import {sidebarReducer} from './sidebar-reducer';
+import {AddMessageACType, dialogsReducer, UpdateNewMessageBodyACType} from './dialogs-reducer';
 
 
 export type PostItem = {
@@ -39,15 +42,16 @@ export type RootStateType = {
     }
 }
 
+export type ActionTypes = AddPostACType |
+                          UpdateNewPostTextACType |
+                          UpdateNewMessageBodyACType |
+                          AddMessageACType
 
 
 type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _callSubscriber: (state: RootStateType) => void
-    _updateNewPostText: (newText: string) => void //!!!!!!!!!!!!!!! //
-    _updateNewMessageText: (newText: string) => void //!!!!!!!!!!!!!!! //
-    // subscribe: (observer: any) => void
     subscribe: (observer: (state: RootStateType) => void) => void
     dispatch: (action: ActionTypes) => void
 }
@@ -97,85 +101,12 @@ export const store: StoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            const newPost = {
-                id: v1(),
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._updateNewPostText(''); //!!!!!!!!!!!!!!! //
-            this._callSubscriber(this._state);
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            // this._updateNewPostText(action.payload.text);
-            this._state.profilePage.newPostText = action.payload.text;
-            this._callSubscriber(this._state);
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
-            // this._updateNewPostText(action.payload.text);
-            this._state.dialogsPage.newMessageBody = action.payload.body;
-            this._callSubscriber(this._state);
-        } else if (action.type === 'SEND-MESSAGE') {
-            const newMessage = {
-                id: v1(),
-                message: this._state.dialogsPage.newMessageBody
-            };
-            this._state.dialogsPage.messages.push(newMessage);
-            this._updateNewMessageText(''); //!!!!!!!!!!!!!!! //
-            this._callSubscriber(this._state);
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+        this._callSubscriber(this._state);
     },
-
-    _updateNewPostText(newText) { //!!!!!!!!!!!!!!! //
-        this._state.profilePage.newPostText = newText;//!!!!!!!!!!!!!!! //
-        this._callSubscriber(this._state);//!!!!!!!!!!!!!!! //
-    },
-    _updateNewMessageText(newText) { //!!!!!!!!!!!!!!! //
-        this._state.dialogsPage.newMessageBody = newText;//!!!!!!!!!!!!!!! //
-        this._callSubscriber(this._state);//!!!!!!!!!!!!!!! //
-    }
 }
-
-export type ActionTypes = AddPostACType |
-                          UpdateNewPostTextACType |
-                          UpdateNewMessageBodyACType |
-                          AddMessageACType
-
-
-type AddPostACType = ReturnType<typeof addPostAC>
-export const addPostAC = () => {
-    return {
-        type: 'ADD-POST',
-    } as const
-}
-
-type UpdateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
-export const updateNewPostTextAC = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        payload: {
-            text: newText
-        }
-    } as const
-}
-
-type AddMessageACType = ReturnType<typeof sendMessageAC>
-export const sendMessageAC = () => {
-    return {
-        type: 'SEND-MESSAGE',
-    } as const
-}
-
-type UpdateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>
-export const updateNewMessageBodyAC = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-BODY',
-        payload: {
-            body: newText
-        }
-    } as const
-}
-
-
 
 
 Object.defineProperty(window, 'store', {
