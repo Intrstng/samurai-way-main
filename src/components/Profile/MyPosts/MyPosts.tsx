@@ -2,22 +2,15 @@ import React, {FC, useRef} from 'react';
 import S from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {v1} from 'uuid';
-import {PostItem} from '../../../redux/state';
-
-// type PostItem = {
-//     id: string
-//     message: string
-//     likesCount: number
-// }
+import {ActionTypes, addPostAC, PostItem, updateNewPostTextAC} from '../../../redux/state';
 
 type MyPostsProps = {
     posts: PostItem[]
     newPostText: string
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionTypes) => void
 }
 
-export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, addPost, updateNewPostText}) => {
+export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, dispatch}) => {
     const postsElements = posts.map(p => <Post key={p.id}
                                                   id={p.id}
                                                   message={p.message}
@@ -25,12 +18,12 @@ export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, addPost, updateNe
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const onClickAddPost = () => {
-        addPost();
+        dispatch(addPostAC());
     }
 
     const onPostChange = () => {
         if (inputRef.current) {
-            updateNewPostText(inputRef.current.value);
+            dispatch(updateNewPostTextAC(inputRef.current.value));
         }
     }
 

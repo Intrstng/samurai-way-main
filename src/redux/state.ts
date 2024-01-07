@@ -1,5 +1,4 @@
 import {v1} from 'uuid';
-import {ReactHTML} from 'react';
 
 
 export type PostItem = {
@@ -25,7 +24,7 @@ export type SidebarItem = {
     src: string
 }
 
-export type StateType = {
+export type RootStateType = {
     profilePage: {
         posts: PostItem[]
         newPostText: string
@@ -42,12 +41,13 @@ export type StateType = {
 
 
 type StoreType = {
-    _state: StateType
-    getState: () => StateType
-    _callSubscriber: (state: StateType) => void
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
-    subscribe: (observer: any) => void
+    _state: RootStateType
+    getState: () => RootStateType
+    _callSubscriber: (state: RootStateType) => void
+    _updateNewPostText: (newText: string) => void //!!!!!!!!!!!!!!! //
+    // subscribe: (observer: any) => void
+    subscribe: (observer: (state: RootStateType) => void) => void
+    dispatch: (action: ActionTypes) => void
 }
 
 export const store: StoreType = {
@@ -83,31 +83,56 @@ export const store: StoreType = {
             ]
         }
     },
+    _callSubscriber(state) {
+        console.log(state)
+    },
+
     getState() {
         return this._state;
     },
-    _callSubscriber(state: StateType) {
-        console.log(state)
-    },
-    addPost() {
-        const newPost = {
-            id: v1(),
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        };
-
-        this._state.profilePage.posts.push(newPost);
-        this.updateNewPostText('');
-        this._callSubscriber(this._state);
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this._state);
-    },
-    // Проверить типизацию subscribe
-    subscribe(observer: () => void) {
+    subscribe(observer) {
         this._callSubscriber = observer;
+    },
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost = {
+                id: v1(),
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._updateNewPostText(''); //!!!!!!!!!!!!!!! //
+            this._callSubscriber(this._state);
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            // this._updateNewPostText(action.payload.text);
+            this._state.profilePage.newPostText = action.payload.text;
+            this._callSubscriber(this._state);
+        }
+    },
+
+    _updateNewPostText(newText) { //!!!!!!!!!!!!!!! //
+        this._state.profilePage.newPostText = newText;//!!!!!!!!!!!!!!! //
+        this._callSubscriber(this._state);//!!!!!!!!!!!!!!! //
     }
+}
+
+export type ActionTypes = AddPostACType | UpdateNewPostTextACType
+
+type AddPostACType = ReturnType<typeof addPostAC>
+export const addPostAC = () => {
+    return {
+        type: 'ADD-POST',
+    } as const
+}
+
+type UpdateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
+export const updateNewPostTextAC = (newText: string) => {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        payload: {
+            text: newText
+        }
+    } as const
 }
 
 Object.defineProperty(window, 'store', {
