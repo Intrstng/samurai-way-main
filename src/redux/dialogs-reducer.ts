@@ -10,7 +10,23 @@ type DialogsStateType = {
     newMessageBody: string
 }
 
-export const dialogsReducer = (state: DialogsStateType, action: ActionTypes): DialogsStateType => {
+const inintialDialogsState: DialogsStateType = {
+    messages: [
+        {id: v1(), message: 'Hi'},
+        {id: v1(), message: 'How are you?'},
+        {id: v1(), message: 'It`s awesome!'},
+        {id: v1(), message: 'Nice to meet you!'}
+    ],
+    dialogs: [
+        {id: v1(), name: 'Tom', src: 'https://iconape.com/wp-content/png_logo_vector/avatar-10.png'},
+        {id: v1(), name: 'Joe', src: 'https://iconape.com/wp-content/files/ui/10834/png/iconfinder_2_avatar_2754578.png'},
+        {id: v1(), name: 'Ann', src: 'https://iconape.com/wp-content/files/jj/10835/png/iconfinder_4_avatar_2754580.png'},
+        {id: v1(), name: 'Tim', src: 'https://iconape.com/wp-content/files/xf/10838/png/iconfinder_7_avatar_2754582.png'}
+    ],
+    newMessageBody: ''
+}
+
+export const dialogsReducer = (state: DialogsStateType = inintialDialogsState, action: ActionTypes): DialogsStateType => {
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY': {
             state.newMessageBody = action.payload.body;

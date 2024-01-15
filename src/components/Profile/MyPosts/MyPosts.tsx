@@ -7,10 +7,11 @@ import {addPostAC, updateNewPostTextAC} from '../../../redux/profile-reducer';
 type MyPostsProps = {
     posts: PostItem[]
     newPostText: string
-    dispatch: (action: ActionTypes) => void
+    updateNewPropsText: (value: string) => void
+    addPost: () => void
 }
 
-export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, dispatch}) => {
+export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, ...props}) => {
     const postsElements = posts.map(p => <Post key={p.id}
                                                   id={p.id}
                                                   message={p.message}
@@ -18,12 +19,12 @@ export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, dispatch}) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const onClickAddPost = () => {
-        dispatch(addPostAC());
+        props.addPost();
     }
 
     const onPostChange = () => {
         if (inputRef.current) {
-            dispatch(updateNewPostTextAC(inputRef.current.value));
+            props.updateNewPropsText(inputRef.current.value);
         }
     }
 

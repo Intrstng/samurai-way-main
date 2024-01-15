@@ -7,42 +7,33 @@ import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {ActionTypes, RootStateType} from './redux/state';
 import {Sidebar} from './components/Sidebar/Sidebar';
-
-type AppProps = {
-    state: RootStateType
-    dispatch: (action: ActionTypes) => void
-}
-
-
-export const App: FC<AppProps> = ({state, dispatch}) => {
-    const {profilePage, dialogsPage, sidebar} = state;
+import {DialogsContainer} from './components/Dialogs/DialogsContainer';
+// import {StoreContext} from './StoreContext';
 
 
 
-
-
+export const App = () => {
     return (
-        <div className={'app-wrapper'}>
-            <Header/>
-            <Navbar/>
-            <Sidebar friends={sidebar.friends}/>
-            <div className={'content'}>
-                {/*<Routes>*/}
-                {/*<Route path={'/profile'} component={Profile}/>*/}
-                {/*<Route path={'/dialogs'} component={Dialogs}/>*/}
+            <div className={'app-wrapper'}>
+                <Header/>
+                <Navbar/>
+                <Sidebar />
+                <div className={'content'}>
+                    {/*<Routes>*/}
+                    <Route path={'/profile'} component={Profile}/>
+                    <Route path={'/dialogs'} component={DialogsContainer}/>
 
 
-                <Route path={'/profile'}
-                       render={() => <Profile state={profilePage}
-                                              dispatch={dispatch}/>}/>
-                <Route path={'/dialogs'}
-                       render={() => <Dialogs state={dialogsPage}
-                                              dispatch={dispatch}/>}/>
+                    {/*<Route path={'/profile'}*/}
+                    {/*       render={() => <Profile />}/> */}
+                    {/*/!*render если передаем пропсы в компоненту Profile*!/*/}
+                    {/*<Route path={'/dialogs'}*/}
+                    {/*       render={() => <DialogsContainer />}/>*/}
 
-                {/*</Routes>*/}
+                    {/*</Routes>*/}
 
 
+                </div>
             </div>
-        </div>
     );
 }
