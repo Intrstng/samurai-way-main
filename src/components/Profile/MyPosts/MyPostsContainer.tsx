@@ -2,30 +2,23 @@ import React, {useContext} from 'react';
 import {addPostAC, updateNewPostTextAC} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {StoreContext} from '../../../StoreContext';
+import {connect} from 'react-redux';
+import { sendMessageAC, updateNewMessageBodyAC } from '../../../redux/dialogs-reducer';
+import { Dialogs } from '../../Dialogs/Dialogs';
+import { PostItem } from '../../../redux/state';
 
+let mapStateToProps = (state: any) => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
+}
 
-export const MyPostsContainer = () => {
-    // let store = useContext(StoreContext);
+let mapDispatchToProps = (dispatch: any) => {
+    return {
+        addPost: () => dispatch(addPostAC()),
+        updateNewPropsText: (value: any) => dispatch(updateNewPostTextAC(value))
+    }
+}
 
-    return (
-        <StoreContext.Consumer>
-            {  // фигурные скобки <StoreContext.Consumer> на новой строке
-                (store: any) => {
-                    let state = store.getState().profilePage;
-                    const onClickAddPost = () => {
-                        store.dispatch(addPostAC());
-                    }
-
-                    const onPostChange = (value: string) => {
-                        store.dispatch(updateNewPostTextAC(value));
-                    }
-
-                    return (<MyPosts updateNewPropsText={onPostChange}
-                             addPost={onClickAddPost}
-                             posts={state.posts}
-                             newPostText={state.newPostText}/>)
-                }
-            }
-        </StoreContext.Consumer>
-    );
-};
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)

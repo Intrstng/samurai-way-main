@@ -13,9 +13,9 @@ type MyPostsProps = {
 
 export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, ...props}) => {
     const postsElements = posts.map(p => <Post key={p.id}
-                                                  id={p.id}
-                                                  message={p.message}
-                                                  likesCount={p.likesCount}/>)
+                                               id={p.id}
+                                               message={p.message}
+                                               likesCount={p.likesCount}/>)
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const onClickAddPost = () => {

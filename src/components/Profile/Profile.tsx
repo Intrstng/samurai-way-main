@@ -1,9 +1,6 @@
-import React, {FC} from 'react';
-import {MyPosts} from './MyPosts/MyPosts';
+import React from 'react';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {ActionTypes, PostItem} from '../../redux/state';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
-import {AppRootStateType} from '../../redux/redux-store';
 
 
 export const Profile = () => {
