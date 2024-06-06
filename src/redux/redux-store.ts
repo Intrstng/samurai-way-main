@@ -1,8 +1,7 @@
-import {combineReducers, createStore, Store} from 'redux';
+import {combineReducers, createStore} from 'redux';
 import {sidebarReducer} from './sidebar-reducer';
 import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reducer';
-import {ActionTypes} from './state';
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,

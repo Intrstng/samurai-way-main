@@ -23,5 +23,5 @@ export const sidebarReducer = (state: SidebarStateType = initialSidebarState, ac
     //     }
     //     default: return state;
     // }
-    return state
+    return {...state}
 }

@@ -1,6 +1,8 @@
 import {v1} from 'uuid';
 import {ActionTypes, PostItem} from './state';
 
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 type ProfileStateType = {
     posts: PostItem[]
@@ -19,7 +21,7 @@ const inintialProfileState: ProfileStateType = {
 
 export const profileReducer = (state: ProfileStateType = inintialProfileState, action: ActionTypes): ProfileStateType => {
     switch (action.type) {
-        case 'ADD-POST': {
+        case ADD_POST: {
             const newPost = {
                 id: v1(),
                 message: state.newPostText,
@@ -29,7 +31,7 @@ export const profileReducer = (state: ProfileStateType = inintialProfileState, a
             state.newPostText = '';
             return state;
         }
-        case 'UPDATE-NEW-POST-TEXT': {
+        case UPDATE_NEW_POST_TEXT: {
             state.newPostText = action.payload.text;
             return state;
         }
@@ -41,14 +43,14 @@ export const profileReducer = (state: ProfileStateType = inintialProfileState, a
 export type AddPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = () => {
     return {
-        type: 'ADD-POST',
+        type: ADD_POST,
     } as const
 }
 
 export type UpdateNewPostTextACType = ReturnType<typeof updateNewPostTextAC>
 export const updateNewPostTextAC = (newText: string) => {
     return {
-        type: 'UPDATE-NEW-POST-TEXT',
+        type: UPDATE_NEW_POST_TEXT,
         payload: {
             text: newText
         }

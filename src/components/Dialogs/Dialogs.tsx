@@ -1,9 +1,8 @@
-import React, {ChangeEvent, FC, useRef} from 'react';
+import React, {ChangeEvent, FC} from 'react';
 import S from './Dialogs.module.css';
 import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
-import {ActionTypes, DialogsItem, MessageItem} from '../../redux/state';
-import {sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogs-reducer';
+import {DialogsItem, MessageItem} from '../../redux/state';
 
 type DialogsProps = {
     dialogs: DialogsItem[]
@@ -16,8 +15,7 @@ type DialogsProps = {
 export const Dialogs: FC<DialogsProps> = ({dialogs,
                                            messages,
                                            newMessageBody,
-                                           onNewMessageChange,
-                                           onClickSendMessage}) => {
+                                           ...props}) => {
 
 
     const dialogsElements = dialogs.map(d => <DialogItem key={d.id} id={d.id} name={d.name} src={d.src}/>);
@@ -26,11 +24,11 @@ export const Dialogs: FC<DialogsProps> = ({dialogs,
 
 
     const onChangeHandlerNewMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        onNewMessageChange(e.currentTarget.value);
+        props.onNewMessageChange(e.currentTarget.value);
     }
 
     const onClickHandlerSendMessage = () => {
-        onClickSendMessage();
+        props.onClickSendMessage();
     };
 
     return (
