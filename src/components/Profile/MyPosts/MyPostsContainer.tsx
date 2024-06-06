@@ -5,20 +5,32 @@ import {StoreContext} from '../../../StoreContext';
 import {connect} from 'react-redux';
 import { sendMessageAC, updateNewMessageBodyAC } from '../../../redux/dialogs-reducer';
 import { Dialogs } from '../../Dialogs/Dialogs';
-import { PostItem } from '../../../redux/state';
+import { AppDispatch, DialogsItem, MessageItem, PostItem } from '../../../redux/state';
+import { AppRootStateType } from '../../../redux/redux-store';
 
-let mapStateToProps = (state: any) => {
+
+type MyPostsMapStateToPropsType = {
+    posts: PostItem[]
+    newPostText: string
+}
+
+let mapStateToProps = (state: AppRootStateType): MyPostsMapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
         newPostText: state.profilePage.newPostText
     }
 }
 
-let mapDispatchToProps = (dispatch: any) => {
+type MyPostsMapDispatchToPropsType = {
+    addPost: () => void
+    updateNewPropsText: (value: string) => void
+}
+
+let mapDispatchToProps = (dispatch: AppDispatch): MyPostsMapDispatchToPropsType => {
     return {
         addPost: () => dispatch(addPostAC()),
-        updateNewPropsText: (value: any) => dispatch(updateNewPostTextAC(value))
+        updateNewPropsText: (value: string) => dispatch(updateNewPostTextAC(value))
     }
 }
 
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export const MyPostsContainer = connect<MyPostsMapStateToPropsType, MyPostsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(MyPosts)

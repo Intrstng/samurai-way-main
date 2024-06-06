@@ -11,3 +11,4 @@ export const StoreContext: any = React.createContext(null);
 //         </StoreContext.Provider>
 // }
 
+// Context used in Sidebar component

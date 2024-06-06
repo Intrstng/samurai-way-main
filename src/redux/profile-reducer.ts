@@ -9,7 +9,7 @@ type ProfileStateType = {
     newPostText: string
 }
 
-const inintialProfileState: ProfileStateType = {
+const initialProfileState: ProfileStateType = {
     posts: [
         {id: v1(), message: 'Post 1', likesCount: 14},
         {id: v1(), message: 'Post 2', likesCount: 11},
@@ -19,7 +19,7 @@ const inintialProfileState: ProfileStateType = {
     newPostText: ''
 }
 
-export const profileReducer = (state: ProfileStateType = inintialProfileState, action: ActionTypes): ProfileStateType => {
+export const profileReducer = (state: ProfileStateType = initialProfileState, action: ActionTypes): ProfileStateType => {
     switch (action.type) {
         case ADD_POST: {
             const newPost = {

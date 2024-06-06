@@ -6,7 +6,7 @@ import {Profile} from './components/Profile/Profile';
 import {Route} from 'react-router-dom';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 import { Footer } from './components/Footer/Footer';
-import { Sidebar } from './components/Sidebar/Sidebar';
+import { SidebarContainer } from './components/Sidebar/SidebarContainer';
 // import {StoreContext} from './StoreContext';
 
 
@@ -16,7 +16,7 @@ export const App = () => {
             <div className={'app-wrapper'}>
                 <Header/>
                 <Navbar/>
-                {/*<Sidebar/>*/}
+                <SidebarContainer/>
                     <div className={'content'}>
                         {/*<Routes>*/}
                         {/*<Route path={'/profile'} component={Profile}/>*/}

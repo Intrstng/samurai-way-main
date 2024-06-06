@@ -109,6 +109,8 @@ export const store: StoreType = {
 }
 
 
+export type AppDispatch = typeof store.dispatch
+
 Object.defineProperty(window, 'store', {
     value: store,
     writable: true,
