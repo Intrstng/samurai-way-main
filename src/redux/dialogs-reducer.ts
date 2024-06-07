@@ -32,8 +32,6 @@ const inintialDialogsState: DialogsStateType = {
 export const dialogsReducer = (state: DialogsStateType = inintialDialogsState, action: ActionTypes): DialogsStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY: {
-            // state.newMessageBody = action.payload.body;
-            // return state;
             return {
                 ...state,
                 newMessageBody: action.payload.body
@@ -44,9 +42,6 @@ export const dialogsReducer = (state: DialogsStateType = inintialDialogsState, a
                 id: v1(),
                 message: state.newMessageBody
             };
-            // state.messages.push(newMessage);
-            // state.newMessageBody = '';
-            // return state;
             return {
                 ...state,
                 messages: [...state.messages, newMessage],

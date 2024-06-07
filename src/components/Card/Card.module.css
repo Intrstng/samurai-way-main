@@ -1,0 +1,36 @@
+.card {
+    padding: 18px;
+    width: 100%;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.65);
+}
+
+.card__head {
+    font-weight: bold;
+    display: grid;
+    grid-template-rows: 20px 20px;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 8px;
+    grid-template-areas:
+    "nm cr"
+    "nm ct"
+}
+
+.card__name {
+    grid-area: nm;
+}
+
+.card__country {
+    grid-area: cr;
+    justify-self: flex-end;
+}
+
+.card__city {
+    grid-area: ct;
+    justify-self: flex-end;
+}
+
+.card__status {
+    padding: 10px 5px 5px;
+}
