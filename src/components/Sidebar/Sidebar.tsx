@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import { SidebarItem } from '../../redux/state';
 import S from '../Sidebar/Sidebar.module.css';
+import { SidebarPropsType } from './SidebarContainer';
 
-type SidebarProps = {
-    friends: SidebarItem[]
-}
+// type SidebarProps = {
+//     friends: SidebarItem[]
+// }
 
-export const Sidebar: FC<SidebarProps> = ({friends}) => {
+export const Sidebar: FC<SidebarPropsType> = ({friends}) => {
     return (
         <div className={S.block}>
             <h3>Friends</h3>

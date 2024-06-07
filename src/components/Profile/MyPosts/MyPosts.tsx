@@ -3,13 +3,14 @@ import S from './MyPosts.module.css';
 import {Post} from './Post/Post';
 import {ActionTypes, PostItem} from '../../../redux/state';
 import {addPostAC, updateNewPostTextAC} from '../../../redux/profile-reducer';
+import { MyPostsProps } from './MyPostsContainer';
 
-type MyPostsProps = {
-    posts: PostItem[]
-    newPostText: string
-    updateNewPropsText: (value: string) => void
-    addPost: () => void
-}
+// type MyPostsProps = {
+//     posts: PostItem[]
+//     newPostText: string
+//     updateNewPropsText: (value: string) => void
+//     addPost: () => void
+// }
 
 export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, ...props}) => {
     const postsElements = posts.map(p => <Post key={p.id}

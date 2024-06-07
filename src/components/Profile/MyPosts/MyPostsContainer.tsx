@@ -7,7 +7,11 @@ import { sendMessageAC, updateNewMessageBodyAC } from '../../../redux/dialogs-re
 import { Dialogs } from '../../Dialogs/Dialogs';
 import { AppDispatch, DialogsItem, MessageItem, PostItem } from '../../../redux/state';
 import { AppRootStateType } from '../../../redux/redux-store';
+import { Dispatch } from 'redux';
 
+
+
+export  type MyPostsProps = MyPostsMapStateToPropsType & MyPostsMapDispatchToPropsType
 
 type MyPostsMapStateToPropsType = {
     posts: PostItem[]
@@ -25,8 +29,8 @@ type MyPostsMapDispatchToPropsType = {
     addPost: () => void
     updateNewPropsText: (value: string) => void
 }
-
-let mapDispatchToProps = (dispatch: AppDispatch): MyPostsMapDispatchToPropsType => {
+// Dispatch type import from redux!!!
+let mapDispatchToProps = (dispatch: Dispatch): MyPostsMapDispatchToPropsType => {
     return {
         addPost: () => dispatch(addPostAC()),
         updateNewPropsText: (value: string) => dispatch(updateNewPostTextAC(value))

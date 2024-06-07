@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Dialogs } from '../Dialogs/Dialogs';
 import { Sidebar } from './Sidebar';
 
+export type SidebarPropsType = SidebarMapStateToPropsType & DialogsMapDispatchToPropsType
+
 type SidebarMapStateToPropsType = {
   friends: SidebarItem[]
 }

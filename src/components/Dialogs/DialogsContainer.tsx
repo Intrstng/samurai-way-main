@@ -6,6 +6,10 @@ import {
 } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
 import { AppDispatch, DialogsItem, MessageItem } from '../../redux/state';
+import { Dispatch } from 'redux';
+
+
+export type DialogsPropsType = DialogsMapStateToPropsType & DialogsMapDispatchToPropsType
 
 type DialogsMapStateToPropsType = {
     dialogs: DialogsItem[]
@@ -26,7 +30,14 @@ type DialogsMapDispatchToPropsType = {
     onClickSendMessage: () => void
 }
 
-let mapDispatchToProps = (dispatch: AppDispatch): DialogsMapDispatchToPropsType => {
+// let mapDispatchToProps = (dispatch: AppDispatch): DialogsMapDispatchToPropsType => {
+//     return {
+//         onNewMessageChange: (value: string) => dispatch(updateNewMessageBodyAC(value)),
+//         onClickSendMessage: () => dispatch(sendMessageAC())
+//     }
+// }
+// Dispatch type import from redux!!!
+let mapDispatchToProps = (dispatch: Dispatch): DialogsMapDispatchToPropsType => {
     return {
         onNewMessageChange: (value: string) => dispatch(updateNewMessageBodyAC(value)),
         onClickSendMessage: () => dispatch(sendMessageAC())
