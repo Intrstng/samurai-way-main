@@ -21,3 +21,24 @@
     border: none;
     cursor: pointer;
 }
+
+.users__paginationControls {
+    margin: 30px auto 10px;
+}
+
+.users__paginationControls span {
+    margin-right: 10px;
+}
+
+.users__selectedPage {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #e8590c;
+    cursor: pointer;
+}
+
+.users__page {
+    font-weight: bold;
+    color: rgba(35, 35, 35, 0.6);
+    cursor: pointer;
+}
