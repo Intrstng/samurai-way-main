@@ -1,20 +1,15 @@
 import React, { FC } from 'react';
 import S from '../User/User.module.css';
 import { Card } from '../Card/Card';
-import { v1 } from 'uuid';
-import { UserType } from '../../redux/users-reducer';
+import avatarDefault from '../../assets/images/Avatar_default.png';
 
 
 type UserProps = {
   userId: string
   name: string
   status: string
-  location: {
-    country: string
-    city: string
-  }
   followed: boolean
-  avatar: string
+  avatar: string | null
   followUser: (userId: string) => void
   unfollowUser: (userId: string) => void
 }
@@ -23,7 +18,6 @@ export const User: FC<UserProps> = ({
                                       userId,
                                       name,
                                       status,
-                                      location,
                                       followed,
                                       avatar,
                                       followUser,
@@ -38,10 +32,12 @@ export const User: FC<UserProps> = ({
   return (
     <div className={S.user}>
       <div className={S.user__avatar}>
-        <img className={S.user__photo} src={avatar} alt={name}/>
+        {avatar ? <img className={S.user__photo} src={avatar} alt={name}/>
+          : <img className={S.user__defaultPhoto} src={avatarDefault} alt={'Default avatar'}/>
+        }
         <button onClick={onClickToggleFollowStatus}>{userButtonName}</button>
       </div>
-      <Card name={name} status={status} location={location}/>
+      <Card name={name} status={status}/>
     </div>
   );
 };

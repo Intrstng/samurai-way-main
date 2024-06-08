@@ -3,33 +3,32 @@ import { User } from '../User/User';
 import S from '../Users/Users.module.css';
 import { UsersProps } from './UsersContainer';
 import { v1 } from 'uuid';
+import axios from 'axios';
 
 
 export const Users: FC<UsersProps> = ({ users,
                                         setUsers,
+                                        showMoreUsers,
                                         unfollowUser,
                                         followUser
 }) => {
   // Temporary solution - Preparing for REST
   useEffect(() => {
-  setUsers([
-      {id: v1(), status: 'Married', name: 'Doctor', location: {country: 'Belgium', city: 'Gant'}, followed: true, avatar: 'https://img.icons8.com/?size=100&id=hdOTX4S6VF7r&format=png&color=000000'},
-      {id: v1(), status: 'Married', name: 'Lawyer', location: {country: 'Canada', city: 'Toronto'}, followed: false, avatar: 'https://img.icons8.com/?size=100&id=lehomL5GkqeO&format=png&color=000000'},
-      {id: v1(), status: 'Single', name: 'Support', location: {country: 'Germany', city: 'Baden-Baden'}, followed: false, avatar: 'https://img.icons8.com/?size=100&id=FzR2LK6FnqKI&format=png&color=000000'},
-      {id: v1(), status: 'Married', name: 'Pilot', location: {country: 'Slovakia', city: 'Zhilina'}, followed: true, avatar: 'https://img.icons8.com/?size=100&id=nsdyNwmAYXWH&format=png&color=000000'},
-    ]
-  )
+    getUsers();
   }, [])
 
+  const getUsers = () => {
+    axios.get('https://social-network.samuraijs.com/api/1.0/users')
+      .then(function (response) {
+        setUsers(response.data.items);
+      })
+  }
+
   const onClickShowMoreUsersHandler = () => {
-    // Temporary solution - Preparing for REST
-    setUsers([
-        {id: v1(), status: 'Married', name: 'Doctor', location: {country: 'Belgium', city: 'Gant'}, followed: true, avatar: 'https://img.icons8.com/?size=100&id=hdOTX4S6VF7r&format=png&color=000000'},
-        {id: v1(), status: 'Married', name: 'Lawyer', location: {country: 'Canada', city: 'Toronto'}, followed: false, avatar: 'https://img.icons8.com/?size=100&id=lehomL5GkqeO&format=png&color=000000'},
-        {id: v1(), status: 'Single', name: 'Support', location: {country: 'Germany', city: 'Baden-Baden'}, followed: false, avatar: 'https://img.icons8.com/?size=100&id=FzR2LK6FnqKI&format=png&color=000000'},
-        {id: v1(), status: 'Married', name: 'Pilot', location: {country: 'Slovakia', city: 'Zhilina'}, followed: true, avatar: 'https://img.icons8.com/?size=100&id=nsdyNwmAYXWH&format=png&color=000000'},
-      ]
-    )
+    axios.get('https://social-network.samuraijs.com/api/1.0/users')
+      .then(function (response) {
+        showMoreUsers(response.data.items);
+      })
   }
 
   return (
@@ -38,10 +37,9 @@ export const Users: FC<UsersProps> = ({ users,
         {users.map(u => <User key={u.id}
                               userId={u.id}
                               status={u.status}
-                              location={u.location}
                               name={u.name}
                               followed={u.followed}
-                              avatar={u.avatar}
+                              avatar={u.photos.small}
                               unfollowUser={unfollowUser}
                               followUser={followUser}
         />)}

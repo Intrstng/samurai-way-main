@@ -19,6 +19,12 @@
     height: 70px;
 }
 
+.user__defaultPhoto {
+    margin-bottom: 10px;
+    width: 60px;
+    height: 60px;
+}
+
 .user button {
     display: block;
     padding: 6px 14px;

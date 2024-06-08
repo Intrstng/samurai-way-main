@@ -6,22 +6,18 @@ import { addPostAC, updateNewPostTextAC } from '../../redux/profile-reducer';
 import { connect } from 'react-redux';
 import { MyPosts } from '../Profile/MyPosts/MyPosts';
 import { Users } from './Users';
-import { followUserAC, setUsersAC, unfollowUserAC, UserStateType, UserType } from '../../redux/users-reducer';
+import {
+  followUserAC,
+  setUsersAC,
+  showMoreUsersAC,
+  unfollowUserAC,
+  UserStateType,
+  UserType
+} from '../../redux/users-reducer';
+import { UsersC } from './UsersC';
 
 
 export  type UsersProps = UserStateType & UsersMapDispatchToPropsType
-
-// type UsersMapStateToPropsType = {
-//   id: string
-//   status: string
-//   name: string
-//   location: {
-//     country: string
-//     city: string
-//   }
-//   followed: boolean
-//   avatar: string
-// }
 
 let mapStateToProps = (state: AppRootStateType): UserStateType => {
   return {
@@ -31,6 +27,7 @@ let mapStateToProps = (state: AppRootStateType): UserStateType => {
 
 type UsersMapDispatchToPropsType = {
   setUsers: (users:  UserType[]) => void
+  showMoreUsers: (users:  UserType[]) => void
   followUser: (userId: string) => void
   unfollowUser: (userId: string) => void
 }
@@ -38,9 +35,13 @@ type UsersMapDispatchToPropsType = {
 let mapDispatchToProps = (dispatch: Dispatch): UsersMapDispatchToPropsType => {
   return {
     setUsers: (users:  UserType[]) => dispatch(setUsersAC(users)),
+    showMoreUsers: (users:  UserType[]) => dispatch(showMoreUsersAC(users)),
     followUser: (userId: string) => dispatch(followUserAC(userId)),
     unfollowUser: (userId: string) => dispatch(unfollowUserAC(userId)),
   }
 }
 
-export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Users)
+// export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Users)
+
+
+export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(UsersC)
