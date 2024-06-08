@@ -5,6 +5,8 @@ const FOLLOW_USER = 'FOLLOW-USER';
 const UNFOLLOW_USER = 'UNFOLLOW-USER';
 const SET_USERS = 'SET-USERS';
 const SHOW_MORE_USERS = 'SHOW-MORE-USERS';
+const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 
 export type UserType = {
   id: string
@@ -19,11 +21,17 @@ export type UserType = {
 
 export type UserStateType = {
   users:  UserType[]
+  pageSize: number
+  totalUsersCount: number
+  currentPage: number
 }
 // avatars: https://icons8.ru/icons/set/avatars
 const initialUsersState: UserStateType = {
   users: [
-  ]
+  ],
+  pageSize: 5,
+  totalUsersCount: 100,
+  currentPage: 1
 }
 
 export const usersReducer = (state: UserStateType = initialUsersState, action: UsersActionTypes): UserStateType => {
@@ -33,7 +41,7 @@ export const usersReducer = (state: UserStateType = initialUsersState, action: U
       const { payload } = action
       return {
         ...state,
-        users: [...payload.users]
+        users: payload.users
       }
     }
     case SHOW_MORE_USERS: {
@@ -57,12 +65,31 @@ export const usersReducer = (state: UserStateType = initialUsersState, action: U
         users: state.users.map(u => u.id === payload.userId ? {...u, followed: false} : u)
       }
     }
+    case SET_CURRENT_PAGE: {
+      const { payload } = action
+      return {
+        ...state,
+        currentPage: payload.page
+      }
+    }
+    case SET_TOTAL_USERS_COUNT: {
+      const { payload } = action
+      return {
+        ...state,
+        totalUsersCount: payload.usersQty
+      }
+    }
     default: return state;
   }
 }
 
 
-type UsersActionTypes = FollowUserACType | UnfollowUserACType | SetUsersACType | ShowMoreUsersACType
+type UsersActionTypes = FollowUserACType |
+                        UnfollowUserACType |
+                        SetUsersACType |
+                        ShowMoreUsersACType |
+                        SetCurrentPageACType |
+                        SetTotalUsersCountACType
 
 export type SetUsersACType = ReturnType<typeof setUsersAC>
 export const setUsersAC = (users:  UserType[]) => {
@@ -100,6 +127,27 @@ export const unfollowUserAC = (userId: string) => {
     type: UNFOLLOW_USER,
     payload: {
       userId
+    }
+  } as const
+}
+
+export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export const setCurrentPageAC = (page: number) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload: {
+      page
+    }
+  } as const
+}
+
+
+export type SetTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
+export const setTotalUsersCountAC = (usersQty: number) => {
+  return {
+    type: SET_TOTAL_USERS_COUNT,
+    payload: {
+      usersQty
     }
   } as const
 }
