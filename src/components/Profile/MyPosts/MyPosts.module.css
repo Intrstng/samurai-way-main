@@ -1,20 +1,27 @@
-.postItems {
-    margin: 0 auto;
-    width: 90%;
-    border: 1px solid #7d92b9;
-    border-radius: 20px;
-}
-
 .posts {
-    margin: 0 0 20px 10px;
+    margin: 0 0 30px 30px;
     width: 80%;
 }
 
+.posts h3 {
+    margin: 35px 0 25px;
+}
+
+.postItems {
+    margin: 0 auto 30px;
+    width: 88%;
+    padding: 30px;
+    border: 1px solid #7d92b9;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
 .posts textarea {
+    margin-bottom: 20px;
     font-size: 0.8rem;
     letter-spacing: 1px;
     background-color: #d7def0;
-    padding: 10px;
+    padding: 15px 10px 5px 25px;
     width: 100%;
     line-height: 1.5;
     border-radius: 5px;
@@ -31,4 +38,5 @@
     color: #FFFFFF;
     background-color: green;
     border: none;
+    cursor: pointer;
 }
