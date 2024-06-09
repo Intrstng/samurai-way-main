@@ -7,6 +7,7 @@ const SET_USERS = 'SET-USERS';
 const SHOW_MORE_USERS = 'SHOW-MORE-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
+const CHANGE_IS_FETCHING = 'CHANGE-IS-FETCHING';
 
 export type UserType = {
   id: string
@@ -24,14 +25,16 @@ export type UserStateType = {
   pageSize: number
   totalUsersCount: number
   currentPage: number
+  isFetching: boolean
 }
-// avatars: https://icons8.ru/icons/set/avatars
+
 const initialUsersState: UserStateType = {
   users: [
   ],
   pageSize: 5,
   totalUsersCount: 100,
-  currentPage: 1
+  currentPage: 1,
+  isFetching: false
 }
 
 export const usersReducer = (state: UserStateType = initialUsersState, action: UsersActionTypes): UserStateType => {
@@ -79,6 +82,13 @@ export const usersReducer = (state: UserStateType = initialUsersState, action: U
         totalUsersCount: payload.usersQty
       }
     }
+    case CHANGE_IS_FETCHING: {
+      const { payload } = action
+      return {
+        ...state,
+        isFetching: payload.isFetching
+      }
+    }
     default: return state;
   }
 }
@@ -89,7 +99,8 @@ type UsersActionTypes = FollowUserACType |
                         SetUsersACType |
                         ShowMoreUsersACType |
                         SetCurrentPageACType |
-                        SetTotalUsersCountACType
+                        SetTotalUsersCountACType |
+                        ChangeIsFetchingStatusACType
 
 export type SetUsersACType = ReturnType<typeof setUsersAC>
 export const setUsersAC = (users:  UserType[]) => {
@@ -148,6 +159,16 @@ export const setTotalUsersCountAC = (usersQty: number) => {
     type: SET_TOTAL_USERS_COUNT,
     payload: {
       usersQty
+    }
+  } as const
+}
+
+export type ChangeIsFetchingStatusACType = ReturnType<typeof changeIsFetchingStatusAC>
+export const changeIsFetchingStatusAC = (isFetching: boolean) => {
+  return {
+    type: CHANGE_IS_FETCHING,
+    payload: {
+      isFetching
     }
   } as const
 }
