@@ -37,11 +37,17 @@ type DialogsMapDispatchToPropsType = {
 //     }
 // }
 // Dispatch type import from redux!!!
-let mapDispatchToProps = (dispatch: Dispatch): DialogsMapDispatchToPropsType => {
-    return {
-        onNewMessageChange: (value: string) => dispatch(updateNewMessageBodyAC(value)),
-        onClickSendMessage: () => dispatch(sendMessageAC())
-    }
-}
+// let mapDispatchToProps = (dispatch: Dispatch): DialogsMapDispatchToPropsType => {
+//     return {
+//         onNewMessageChange: (value: string) => dispatch(updateNewMessageBodyAC(value)),
+//         onClickSendMessage: () => dispatch(sendMessageAC())
+//     }
+// }
+//
+// export const DialogsContainer = connect<DialogsMapStateToPropsType,DialogsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Dialogs) // {} own props is empty (because DialogsContainer has no props)
 
-export const DialogsContainer = connect<DialogsMapStateToPropsType,DialogsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Dialogs) // {} own props is empty (because DialogsContainer has no props)
+// updateNewMessageBodyAC is named as onNewMessageChange we can write property onNewMessageChange
+export const DialogsContainer = connect<DialogsMapStateToPropsType,DialogsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+    onNewMessageChange: updateNewMessageBodyAC,
+    onClickSendMessage: sendMessageAC,
+})(Dialogs)

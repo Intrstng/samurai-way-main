@@ -85,19 +85,30 @@ type UsersMapDispatchToPropsType = {
   changeIsFetchingStatus: (isFetching: boolean) => void
 }
 // Dispatch type import from redux!!!
-let mapDispatchToProps = (dispatch: Dispatch): UsersMapDispatchToPropsType => {
-  return {
-    setUsers: (users:  UserType[]) => dispatch(setUsersAC(users)),
-    showMoreUsers: (users:  UserType[]) => dispatch(showMoreUsersAC(users)),
-    followUser: (userId: string) => dispatch(followUserAC(userId)),
-    unfollowUser: (userId: string) => dispatch(unfollowUserAC(userId)),
-    setCurrentPage: (page: number) => dispatch(setCurrentPageAC(page)),
-    setTotalUsersCount: (usersQty: number) => dispatch(setTotalUsersCountAC(usersQty)),
-    changeIsFetchingStatus: (isFetching: boolean) => dispatch(changeIsFetchingStatusAC(isFetching))
-  }
-}
+// let mapDispatchToProps = (dispatch: Dispatch): UsersMapDispatchToPropsType => {
+//   return {
+//     setUsers: (users:  UserType[]) => dispatch(setUsersAC(users)),
+//     showMoreUsers: (users:  UserType[]) => dispatch(showMoreUsersAC(users)),
+//     followUser: (userId: string) => dispatch(followUserAC(userId)),
+//     unfollowUser: (userId: string) => dispatch(unfollowUserAC(userId)),
+//     setCurrentPage: (page: number) => dispatch(setCurrentPageAC(page)),
+//     setTotalUsersCount: (usersQty: number) => dispatch(setTotalUsersCountAC(usersQty)),
+//     changeIsFetchingStatus: (isFetching: boolean) => dispatch(changeIsFetchingStatusAC(isFetching))
+//   }
+// }
 
-// export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Users)
+// // export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(Users)
+
+// export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
 
 
-export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
+// setUsersAC is named as setUsers we can write property setUsers
+export const UsersContainer = connect<UserStateType, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps,  {
+  setUsers: setUsersAC,
+  showMoreUsers: showMoreUsersAC,
+  followUser: followUserAC,
+  unfollowUser: unfollowUserAC,
+  setCurrentPage: setCurrentPageAC,
+  setTotalUsersCount: setTotalUsersCountAC,
+  changeIsFetchingStatus: changeIsFetchingStatusAC,
+})(UsersAPIComponent)

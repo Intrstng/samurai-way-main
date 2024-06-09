@@ -30,11 +30,17 @@ type MyPostsMapDispatchToPropsType = {
     updateNewPropsText: (value: string) => void
 }
 // Dispatch type import from redux!!!
-let mapDispatchToProps = (dispatch: Dispatch): MyPostsMapDispatchToPropsType => {
-    return {
-        addPost: () => dispatch(addPostAC()),
-        updateNewPropsText: (value: string) => dispatch(updateNewPostTextAC(value))
-    }
-}
+// let mapDispatchToProps = (dispatch: Dispatch): MyPostsMapDispatchToPropsType => {
+//     return {
+//         addPost: () => dispatch(addPostAC()),
+//         updateNewPropsText: (value: string) => dispatch(updateNewPostTextAC(value))
+//     }
+// }
+//
+// export const MyPostsContainer = connect<MyPostsMapStateToPropsType, MyPostsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(MyPosts)
 
-export const MyPostsContainer = connect<MyPostsMapStateToPropsType, MyPostsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, mapDispatchToProps)(MyPosts)
+// addPostAC is named as addPost we can write property addPost
+export const MyPostsContainer = connect<MyPostsMapStateToPropsType, MyPostsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+    addPost: addPostAC,
+    updateNewPropsText: updateNewPostTextAC,
+})(MyPosts)
