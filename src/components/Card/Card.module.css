@@ -4,6 +4,7 @@
     border: 1px solid #000;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.65);
+    overflow: hidden;
 }
 
 .card__head {
@@ -33,4 +34,9 @@
 
 .card__status {
     padding: 10px 5px 5px;
+}
+
+.card__status p {
+    inline-size: 600px;
+    overflow-wrap: break-word;
 }

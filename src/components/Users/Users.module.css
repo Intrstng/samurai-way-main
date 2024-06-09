@@ -51,7 +51,11 @@
 }
 
 .users__paginationPages {
-    width: 40%;
+    width: 50%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .users__selectedPage {

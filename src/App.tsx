@@ -7,7 +7,6 @@ import { Route } from 'react-router-dom';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { Footer } from './components/Footer/Footer';
 import { SidebarContainer } from './components/Sidebar/SidebarContainer';
-import { Users } from './components/Users/Users';
 import { UsersContainer } from './components/Users/UsersContainer';
 // import {StoreContext} from './StoreContext';
 
