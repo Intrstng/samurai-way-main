@@ -6,6 +6,11 @@
     align-items: center;
 }
 
+.users button:disabled {
+    opacity: 0.75;
+    background-color: rgba(107, 107, 107, 0.6);
+}
+
 .users__list {
     width: 95%;
     margin: 50px 25px 20px;
@@ -23,11 +28,30 @@
 }
 
 .users__paginationControls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 30px auto 10px;
+    width: 65%;
 }
 
 .users__paginationControls span {
     margin-right: 10px;
+}
+
+.users__paginationControls button {
+    display: block;
+    padding: 6px 14px;
+    font-size: 12px;
+    color: #FFFFFF;
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.users__paginationPages {
+    width: 40%;
 }
 
 .users__selectedPage {
@@ -41,4 +65,11 @@
     font-weight: bold;
     color: rgba(35, 35, 35, 0.6);
     cursor: pointer;
+}
+
+.users__pageTotalCounter {
+    font-weight: bold;
+    font-size: 0.8em;
+    letter-spacing: 1px;
+    color: rgba(35, 35, 35, 0.6);
 }
