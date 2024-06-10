@@ -3,7 +3,7 @@ import './App.css';
 import { Header } from './components/Header/Header';
 import { Navbar } from './components/Navbar/Navbar';
 import { ProfileContainer } from './components/Profile/Profile';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { Footer } from './components/Footer/Footer';
 import { SidebarContainer } from './components/Sidebar/SidebarContainer';
@@ -17,7 +17,7 @@ export const App = () => {
                 <Navbar/>
                 <SidebarContainer/>
                     <div className={'content'}>
-                        {/*<Routes>*/}
+                        <Switch>
                         {/*<Route path={'/profile'} component={Profile}/>*/}
                         {/*<Route path={'/dialogs'} component={DialogsContainer}/>*/}
 
@@ -29,7 +29,7 @@ export const App = () => {
                         <Route path={'/users'}
                              render={() => <UsersContainer />}/>
 
-                        {/*</Routes>*/}
+                        </Switch>
                     </div>
                 <Footer/>
             </div>
