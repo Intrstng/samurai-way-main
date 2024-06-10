@@ -30,6 +30,16 @@ export type UserStateType = {
 
 const initialUsersState: UserStateType = {
   users: [
+    // {
+    //   id: '1',
+    //   name: 'Tom',
+    //   status: 'text',
+    //   followed: true,
+    //   photos: {
+    //     small: null,
+    //     large: null
+    //   }
+    // }
   ],
   pageSize: 5,
   totalUsersCount: 100,

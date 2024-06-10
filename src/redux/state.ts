@@ -1,5 +1,5 @@
 import {v1} from 'uuid';
-import {AddPostACType, profileReducer, UpdateNewPostTextACType} from './profile-reducer';
+import { AddPostACType, profileReducer, SetUserProfileACType, UpdateNewPostTextACType } from './profile-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 import {AddMessageACType, dialogsReducer, UpdateNewMessageBodyACType} from './dialogs-reducer';
 import { UserStateType, UserType } from './users-reducer';
@@ -49,7 +49,8 @@ export type RootStateType = {
 export type ActionTypes = AddPostACType |
                           UpdateNewPostTextACType |
                           UpdateNewMessageBodyACType |
-                          AddMessageACType
+                          AddMessageACType |
+                          SetUserProfileACType
 
 
 type StoreType = {
@@ -113,7 +114,7 @@ export const store: StoreType = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        // this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
         this._state.sidebar = sidebarReducer(this._state.sidebar, action);
         this._callSubscriber(this._state);

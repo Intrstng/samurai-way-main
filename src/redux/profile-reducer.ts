@@ -3,20 +3,66 @@ import {ActionTypes, PostItem} from './state';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const SET_USER_PROFILE = 'SET-USER-PROFILE';
 
-type ProfileStateType = {
+export type ProfileStateType = {
     posts: PostItem[]
     newPostText: string
+    profile: ProfileType
 }
+
+export type ProfileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    aboutMe: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+    photos: {
+        small: string | null
+        large: string | null
+    }
+} | null
 
 const initialProfileState: ProfileStateType = {
     posts: [
         {id: v1(), message: 'Post 1', likesCount: 14},
         {id: v1(), message: 'Post 2', likesCount: 11},
         {id: v1(), message: 'Post 3', likesCount: 17},
-        {id: v1(), message: 'Post 4', likesCount: 9}
+        {id: v1(), message: 'Post 4', likesCount: 9},
     ],
-    newPostText: ''
+    profile: null,
+    //   {
+    //     userId: 1,
+    //     lookingForAJob: true,
+    //     lookingForAJobDescription: '',
+    //     fullName: '',
+    //     aboutMe: '',
+    //     contacts: {
+    //         github: '',
+    //         vk: '',
+    //         facebook: '',
+    //         instagram: '',
+    //         twitter: '',
+    //         website: '',
+    //         youtube: '',
+    //         mainLink: '',
+    //     },
+    //     photos: {
+    //         small: null,
+    //         large: null,
+    //     }
+    // },
+    newPostText: '',
 }
 
 export const profileReducer = (state: ProfileStateType = initialProfileState, action: ActionTypes): ProfileStateType => {
@@ -39,6 +85,12 @@ export const profileReducer = (state: ProfileStateType = initialProfileState, ac
                 newPostText: action.payload.text
             }
         }
+        case SET_USER_PROFILE: {
+            return {
+                ...state,
+                profile: action.payload.profile
+            }
+        }
         default: return state;
     }
 }
@@ -57,6 +109,16 @@ export const updateNewPostTextAC = (newText: string) => {
         type: UPDATE_NEW_POST_TEXT,
         payload: {
             text: newText
+        }
+    } as const
+}
+
+export type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
+export const setUserProfileAC = (profile: ProfileType) => {
+    return {
+        type: SET_USER_PROFILE,
+        payload: {
+            profile
         }
     } as const
 }
