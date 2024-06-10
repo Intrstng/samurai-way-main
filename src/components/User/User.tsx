@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import S from '../User/User.module.css';
 import { Card } from '../Card/Card';
 import avatarDefault from '../../assets/images/Avatar_default.png';
+import { NavLink } from 'react-router-dom';
 
 
 type UserProps = {
@@ -32,8 +33,8 @@ export const User: FC<UserProps> = ({
   return (
     <div className={S.user}>
       <div className={S.user__avatar}>
-        {avatar ? <img className={S.user__photo} src={avatar} alt={name}/>
-          : <img className={S.user__defaultPhoto} src={avatarDefault} alt={'Default avatar'}/>
+        {avatar ? <NavLink to={`/profile/${userId}`}><img className={S.user__photo} src={avatar} alt={name}/></NavLink>
+                : <NavLink to={`/profile/${userId}`}><img className={S.user__defaultPhoto} src={avatarDefault} alt={'Default avatar'}/></NavLink>
         }
         <button onClick={onClickToggleFollowStatus}>{userButtonName}</button>
       </div>
