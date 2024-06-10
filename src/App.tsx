@@ -8,12 +8,13 @@ import { DialogsContainer } from './components/Dialogs/DialogsContainer';
 import { Footer } from './components/Footer/Footer';
 import { SidebarContainer } from './components/Sidebar/SidebarContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
+import { HeaderContainer } from './components/Header/HeaderContainer';
 
 
 export const App = () => {
     return (
             <div className={'app-wrapper'}>
-                <Header/>
+                <HeaderContainer />
                 <Navbar/>
                 <SidebarContainer/>
                     <div className={'content'}>

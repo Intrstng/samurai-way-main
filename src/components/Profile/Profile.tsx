@@ -64,46 +64,10 @@ type ProfileAPIContainerProps = ProfileMapStateToPropsType &
 // It gives access to router params in class component
 let WithUrlDataContainerComponent = withRouter(ProfileAPIContainer) // To have access to URL router params we are wrapping ProfileAPIContainer in HOC withRouter()
 
-export const ProfileContainer = connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, { userId?: string }, AppRootStateType>(mapStateToProps,  {
+
+// export const ProfileContainer = connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, { userId?: string }, AppRootStateType>(mapStateToProps,  {
+//   setUserProfile: setUserProfileAC,
+// })(WithUrlDataContainerComponent)
+export const ProfileContainer = connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps,  {
   setUserProfile: setUserProfileAC,
 })(WithUrlDataContainerComponent)
-
-
-
-
-
-// import React, { useEffect } from 'react';
-// import { ProfileInfo } from './ProfileInfo/ProfileInfo';
-// import { MyPostsContainer } from './MyPosts/MyPostsContainer';
-// import axios from 'axios';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { setUserProfileAC } from '../../redux/profile-reducer';
-// import { AppRootStateType } from '../../redux/redux-store';
-// import { useParams } from 'react-router-dom';
-//
-//
-// type ProfileRouteParams = {
-//   id: string
-// }
-//
-// export const ProfileContainer = () => {
-//   const dispatch = useDispatch();
-//   const profile = useSelector((state: AppRootStateType) => state.profilePage.profile);
-//
-//   const params = useParams<ProfileRouteParams>()
-//
-//   useEffect(() => {
-//     axios
-//       .get(`https://social-network.samuraijs.com/api/1.0/profile/${params.id}`) // !!!!!!!!!!!!!!!
-//       .then((response) => {
-//         dispatch(setUserProfileAC(response.data));
-//       });
-//   }, []);
-//
-//   return (
-//     <>
-//       <ProfileInfo profile={profile} />
-//       <MyPostsContainer />
-//     </>
-//   );
-// };
