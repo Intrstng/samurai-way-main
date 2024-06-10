@@ -1,13 +1,11 @@
 import React from 'react';
-import { PostItem } from '../../redux/state';
 import { AppRootStateType } from '../../redux/redux-store';
-import { Dispatch } from 'redux';
-import { addPostAC, updateNewPostTextAC } from '../../redux/profile-reducer';
 import { connect } from 'react-redux';
-import { MyPosts } from '../Profile/MyPosts/MyPosts';
 import {
   changeIsFetchingStatusAC,
-  followUserAC, setCurrentPageAC, setTotalUsersCountAC,
+  followUserAC,
+  setCurrentPageAC,
+  setTotalUsersCountAC,
   setUsersAC,
   showMoreUsersAC,
   unfollowUserAC,
@@ -16,7 +14,6 @@ import {
 } from '../../redux/users-reducer';
 import axios from 'axios';
 import { UsersPresentationComponent } from './UsersPresentationComponent';
-import loadingSpinner from '../../assets/images/Loading_spinner.gif';
 import { Preloader } from '../Preloader/Preloader';
 
 
@@ -50,10 +47,10 @@ export class UsersAPIComponent extends React.Component<UsersProps, {}> {
 
   render() {
     return this.props.isFetching ? <Preloader />
-                                  : <UsersPresentationComponent fetchUsers={this.fetchUsers}
+                                  : <UsersPresentationComponent users={this.props.users}
+                                                                fetchUsers={this.fetchUsers}
                                                                 fetchUsersToShowMore={this.fetchUsersToShowMore}
                                                                 setCurrentPage={this.props.setCurrentPage}
-                                                                users={this.props.users}
                                                                 totalUsersCount={this.props.totalUsersCount}
                                                                 currentPage={this.props.currentPage}
                                                                 pageSize={this.props.pageSize}
@@ -75,7 +72,7 @@ let mapStateToProps = (state: AppRootStateType): UserStateType => {
   }
 }
 
-type UsersMapDispatchToPropsType = {
+export type UsersMapDispatchToPropsType = {
   setUsers: (users:  UserType[]) => void
   showMoreUsers: (users:  UserType[]) => void
   followUser: (userId: string) => void
