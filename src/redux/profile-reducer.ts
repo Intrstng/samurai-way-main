@@ -129,13 +129,9 @@ export const setUserProfileAC = (profile: ProfileType) => {
 
 // THUNK CREATORS
 
-export const getCurrentUserProfileThunkCreator = (userId: string | undefined) => {
+export const getCurrentUserProfileThunkCreator = (userId: string) => {
     return (dispatch: Dispatch) => {
-        let userIdInner = userId;
-        if (!userIdInner) {
-            userIdInner = '2'; // OPENS PAGE BY DEFAULT
-        }
-        profileAPI.getUsersProfile(userIdInner)
+        profileAPI.getUsersProfile(userId)
             .then((data) => {
                 dispatch(setUserProfileAC(data));
             });

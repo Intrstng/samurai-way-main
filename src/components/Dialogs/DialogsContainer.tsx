@@ -15,13 +15,15 @@ type DialogsMapStateToPropsType = {
     dialogs: DialogsItem[]
     messages: MessageItem[]
     newMessageBody: string
+    isCurrentUserAuthorized: boolean
 }
 
 let mapStateToProps = (state: AppRootStateType): DialogsMapStateToPropsType => {
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
-        newMessageBody: state.dialogsPage.newMessageBody
+        newMessageBody: state.dialogsPage.newMessageBody,
+        isCurrentUserAuthorized: state.auth.isAuth,
     }
 }
 

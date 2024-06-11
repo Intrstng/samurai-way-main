@@ -9,6 +9,7 @@ import { Footer } from './components/Footer/Footer';
 import { SidebarContainer } from './components/Sidebar/SidebarContainer';
 import { UsersContainer } from './components/Users/UsersContainer';
 import { HeaderContainer } from './components/Header/HeaderContainer';
+import { LoginPage } from './components/LoginPage/LoginPage';
 
 
 export const App = () => {
@@ -22,6 +23,7 @@ export const App = () => {
                         {/*<Route path={'/profile'} component={Profile}/>*/}
                         {/*<Route path={'/dialogs'} component={DialogsContainer}/>*/}
 
+                        <Route path={'/login'} component={LoginPage}/>
                         <Route path={'/profile/:userId?'}
                                render={() => <ProfileContainer />}/>
                         {/*render если передаем пропсы в компоненту Profile*/}

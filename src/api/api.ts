@@ -43,7 +43,7 @@ export const usersAPI = {
             console.error('Error unfollowing user:', error);
             throw error;
         }
-    },
+    }
 }
 
 export const userAuthAPI = {
