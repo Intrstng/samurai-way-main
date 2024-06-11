@@ -9,7 +9,7 @@ type UsersPresentationComponentType = {
   totalUsersCount: number
   currentPage: number
   pageSize: number
-  followingInProgress: boolean
+  followingInProgress: string[]
   followUser: (userId: string) => void;
   unfollowUser: (userId: string) => void;
   fetchUsers: (page: number) => void
@@ -97,7 +97,7 @@ export const UsersPresentationComponent: FC<UsersPresentationComponentType> = (p
             avatar={u.photos.small}
             unfollowUser={props.unfollowUser}
             followUser={props.followUser}
-            followingInProgress={props.followingInProgress}
+            followingInProgressFlag={props.followingInProgress.includes(u.id)}
           />
         ))}
       </div>
