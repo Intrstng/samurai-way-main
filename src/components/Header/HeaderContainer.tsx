@@ -1,66 +1,65 @@
 import React from 'react';
-import axios from 'axios';
-import { Preloader } from '../Preloader/Preloader';
-import { UsersPresentationComponent } from '../Users/UsersPresentationComponent';
-import {
-  changeIsFetchingStatusAC,
-  followUserAC, setCurrentPageAC, setTotalUsersCountAC,
-  setUsersAC,
-  showMoreUsersAC,
-  unfollowUserAC,
-  UserStateType,
-  UserType
-} from '../../redux/users-reducer';
 import { AppRootStateType } from '../../redux/redux-store';
 import { connect } from 'react-redux';
-import { UsersAPIComponent, UsersProps } from '../Users/UsersContainer';
 import { Header } from './Header';
-import { AuthStateType, setAuthUserDataAC } from '../../redux/auth-reducer';
+import {
+    AuthStateType,
+    setAuthUserDataAC,
+    setAvatarFromCurrentUsersProfileToAuthUserDataAC
+} from '../../redux/auth-reducer';
+import { profileAPI, userAuthAPI } from '../../api/api';
 
 
 export class HeaderAPIContainer extends React.Component<HeaderAuthProps, {}> {
-  componentDidMount() {
-    this.getAuthUserData();
-  }
+    componentDidMount() {
+        this.getAuthUserData();
+    }
 
-  getAuthUserData = () => {
-    // this.props.changeIsFetchingStatus(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/auth/me`,
-        {
-          withCredentials: true
-        }
-      )
-      .then((response) => {
-        if (response.data.resultCode === 0) { // 0 - means that Authorization is successful
-          this.props.setAuthUserData(response.data.data) // {userId, email, login}
-        }
+    getAuthUserData = () => {
+        // this.props.changeIsFetchingStatus(true);
+        userAuthAPI.authUser()
+            .then((response) => {
+                if (response.resultCode === 0) { // 0 - means that Authorization is successful
+                    this.props.setAuthUserData(response.data) // {userId (id), email, login}
 
-        // this.props.changeIsFetchingStatus(false);
-      });
-  };
+                    // Set avatar from loaded current users profile to users auth data
+                    return profileAPI.getUsersProfile(response.data.id)
+                }
+            })
+            .then((data) => {
+                this.props.setAvatarFromCurrentUsersProfileToAuthUserData(data.photos.small);
+            })
+    }
+    // this.props.changeIsFetchingStatus(false);
 
-
-  render() {
-    return <Header {...this.props}/>
-  }
+    render() {
+        return <Header {...this.props}/>
+    }
 }
 
 
-export  type HeaderAuthProps = Omit<AuthStateType, 'id' | 'email'> & HeaderMapDispatchToPropsType
+export  type HeaderAuthProps = HeaderMapStatePropsType & HeaderMapDispatchToPropsType
 
-let mapStateToProps = (state: AppRootStateType): Omit<AuthStateType, 'id' | 'email'> => {
-  return {
-    login: state.auth.login,
-    isAuth: state.auth.isAuth,
-  }
+export type HeaderMapStatePropsType = {
+    login: string | null
+    isAuth: boolean
+    avatar: string | null
+}
+
+let mapStateToProps = (state: AppRootStateType): HeaderMapStatePropsType => {
+    return {
+        login: state.auth.login,
+        isAuth: state.auth.isAuth,
+        avatar: state.auth.avatar,
+    }
 }
 
 export type HeaderMapDispatchToPropsType = {
-  setAuthUserData: (authData: Omit<AuthStateType, 'isFetching'>) => void
+    setAuthUserData: (authData: Omit<AuthStateType, 'isFetching'>) => void
+    setAvatarFromCurrentUsersProfileToAuthUserData: (avatarFromProfile: string | null) => void
 }
 
-export const HeaderContainer = connect<Omit<AuthStateType, 'id' | 'email'> , HeaderMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps,  {
-  setAuthUserData: setAuthUserDataAC
+export const HeaderContainer = connect<HeaderMapStatePropsType, HeaderMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+    setAuthUserData: setAuthUserDataAC,
+    setAvatarFromCurrentUsersProfileToAuthUserData: setAvatarFromCurrentUsersProfileToAuthUserDataAC,
 })(HeaderAPIContainer)

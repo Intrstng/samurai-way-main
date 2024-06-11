@@ -1,13 +1,12 @@
-import {v1} from 'uuid';
-import {ActionTypes, PostItem} from './state';
-
 const SET_AUTH_USER_DATA = 'SET-AUTH-USER-DATA';
+const SET_AVATAR_FROM_CURRENT_USERS_PROFILE_TO_AUTH_USER_DATA = 'SET-AVATAR-FROM-CURRENT-USERS-PROFILE-TO-AUTH-USER-DATA';
 
 export type AuthStateType = {
   id: number | null
   email: string | null
   login: string | null
   isAuth: boolean
+  avatar: string | null
 }
 
 const initialAuthState = {
@@ -15,6 +14,7 @@ const initialAuthState = {
   email: null,
   login: null,
   isAuth: false,
+  avatar: null
 }
 
 export const authReducer = (state: AuthStateType = initialAuthState, action: UsersActionTypes): AuthStateType => {
@@ -28,19 +28,36 @@ export const authReducer = (state: AuthStateType = initialAuthState, action: Use
         isAuth: true,
       }
     }
+    case SET_AVATAR_FROM_CURRENT_USERS_PROFILE_TO_AUTH_USER_DATA: {
+      const {payload} = action
+      return {
+        ...state,
+        avatar: payload.avatarFromProfile,
+      }
+    }
     default: return state;
   }
 }
 
 
-type UsersActionTypes = SetAuthUserDataACType
+type UsersActionTypes = SetAuthUserDataACType | SetAvatarFromCurrentUsersProfileToAuthUserData
 
 export type SetAuthUserDataACType = ReturnType<typeof setAuthUserDataAC>
-export const setAuthUserDataAC = (authData: Omit<AuthStateType, 'isFetching'>) => {
+export const setAuthUserDataAC = (authData: Omit<AuthStateType, 'avatar'>) => {
   return {
     type: SET_AUTH_USER_DATA,
     payload: {
       authData
+    }
+  } as const
+}
+
+export type SetAvatarFromCurrentUsersProfileToAuthUserData = ReturnType<typeof setAvatarFromCurrentUsersProfileToAuthUserDataAC>
+export const setAvatarFromCurrentUsersProfileToAuthUserDataAC = (avatarFromProfile: string | null ) => {
+  return {
+    type: SET_AVATAR_FROM_CURRENT_USERS_PROFILE_TO_AUTH_USER_DATA,
+    payload: {
+      avatarFromProfile
     }
   } as const
 }

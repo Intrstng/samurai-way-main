@@ -12,7 +12,7 @@ type UsersPresentationComponentType = {
   followUser: (userId: string) => void;
   unfollowUser: (userId: string) => void;
   fetchUsers: (page: number) => void
-  fetchUsersToShowMore: () => void
+  fetchUsersForShowMore: (pageSize: number, page: number) => void
   setCurrentPage: (page: number) => void
 }
 
@@ -57,7 +57,7 @@ export const UsersPresentationComponent: FC<UsersPresentationComponentType> = (p
   };
 
   const onClickShowMoreUsersHandler = () => {
-    props.fetchUsersToShowMore();
+    props.fetchUsersForShowMore(props.pageSize, props.currentPage + 1);
   }
 
   return (
