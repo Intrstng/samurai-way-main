@@ -2,6 +2,7 @@ import React from 'react';
 import { AppRootStateType } from '../../redux/redux-store';
 import { connect } from 'react-redux';
 import {
+    changeFollowingInProgressAC,
     changeIsFetchingStatusAC,
     followUserAC,
     setCurrentPageAC,
@@ -43,22 +44,28 @@ export class UsersAPIComponent extends React.Component<UsersProps, {}> {
 
     setUserAsFollowedAtServerAndSetFollowedInUserState = (userId: string) => {
         if (this.props.isAuthorized) {
+            this.props.changeFollowingInProgress(true);
+
             usersAPI.followUser(userId)
                 .then((data) => {
                     if (data.resultCode === 0) {
                         this.props.followUser(userId);
                     }
+                    this.props.changeFollowingInProgress(false);
                 });
         }
     }
 
     setUserAsUnFollowedAtServerAndSetUnFollowedInUserState = (userId: string) => {
         if (this.props.isAuthorized) {
+            this.props.changeFollowingInProgress(true);
+
             usersAPI.unfollowUser(userId)
                 .then((data) => {
                     if (data.resultCode === 0) {
                         this.props.unfollowUser(userId);
                     }
+                    this.props.changeFollowingInProgress(false);
                 });
         }
     }
@@ -73,7 +80,9 @@ export class UsersAPIComponent extends React.Component<UsersProps, {}> {
                                           currentPage={this.props.currentPage}
                                           pageSize={this.props.pageSize}
                                           followUser={this.setUserAsFollowedAtServerAndSetFollowedInUserState}
-                                          unfollowUser={this.setUserAsUnFollowedAtServerAndSetUnFollowedInUserState}/>
+                                          unfollowUser={this.setUserAsUnFollowedAtServerAndSetUnFollowedInUserState}
+                                          followingInProgress={this.props.followingInProgress}
+            />
     }
 }
 
@@ -87,6 +96,7 @@ export type UserMapStateToProps = {
     currentPage: number
     isFetching: boolean
     isAuthorized: boolean
+    followingInProgress: boolean
 }
 
 let mapStateToProps = (state: AppRootStateType): UserMapStateToProps => {
@@ -97,6 +107,7 @@ let mapStateToProps = (state: AppRootStateType): UserMapStateToProps => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         isAuthorized: state.auth.isAuth,
+        followingInProgress: state.usersPage.followingInProgress,
     }
 }
 
@@ -108,6 +119,7 @@ export type UsersMapDispatchToPropsType = {
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (usersQty: number) => void
     changeIsFetchingStatus: (isFetching: boolean) => void
+    changeFollowingInProgress: (inProgress: boolean) => void
 }
 
 // setUsersAC is named as setUsers we can write property setUsers
@@ -119,4 +131,5 @@ export const UsersContainer = connect<UserMapStateToProps, UsersMapDispatchToPro
     setCurrentPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
     changeIsFetchingStatus: changeIsFetchingStatusAC,
+    changeFollowingInProgress: changeFollowingInProgressAC,
 })(UsersAPIComponent)

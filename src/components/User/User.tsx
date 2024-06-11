@@ -11,6 +11,7 @@ type UserProps = {
   status: string
   followed: boolean
   avatar: string | null
+  followingInProgress: boolean
   followUser: (userId: string) => void
   unfollowUser: (userId: string) => void
 }
@@ -22,7 +23,8 @@ export const User: FC<UserProps> = ({
                                       followed,
                                       avatar,
                                       followUser,
-                                      unfollowUser
+                                      unfollowUser,
+                                      followingInProgress
 }) => {
   const onClickToggleFollowStatus = () => followed
                                           ? unfollowUser(userId)
@@ -36,7 +38,7 @@ export const User: FC<UserProps> = ({
         {avatar ? <NavLink to={`/profile/${userId}`}><img className={S.user__photo} src={avatar} alt={name}/></NavLink>
                 : <NavLink to={`/profile/${userId}`}><img className={S.user__defaultPhoto} src={avatarDefault} alt={'Default avatar'}/></NavLink>
         }
-        <button onClick={onClickToggleFollowStatus}>{userButtonName}</button>
+        <button disabled={followingInProgress} onClick={onClickToggleFollowStatus}>{userButtonName}</button>
       </div>
       <Card name={name} status={status}/>
     </div>

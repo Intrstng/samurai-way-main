@@ -8,6 +8,7 @@ const SHOW_MORE_USERS = 'SHOW-MORE-USERS';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT';
 const CHANGE_IS_FETCHING = 'CHANGE-IS-FETCHING';
+const CHANGE_FOLLOWING_IN_PROGRESS = 'CHANGE-FOLLOWING-IN-PROGRESS';
 
 export type UserType = {
   id: string
@@ -26,6 +27,7 @@ export type UserStateType = {
   totalUsersCount: number
   currentPage: number
   isFetching: boolean
+  followingInProgress: boolean
 }
 
 const initialUsersState: UserStateType = {
@@ -44,7 +46,8 @@ const initialUsersState: UserStateType = {
   pageSize: 5,
   totalUsersCount: 100,
   currentPage: 1,
-  isFetching: false
+  isFetching: false,
+  followingInProgress: false
 }
 
 export const usersReducer = (state: UserStateType = initialUsersState, action: UsersActionTypes): UserStateType => {
@@ -99,6 +102,13 @@ export const usersReducer = (state: UserStateType = initialUsersState, action: U
         isFetching: payload.isFetching
       }
     }
+    case CHANGE_FOLLOWING_IN_PROGRESS: {
+      const { payload } = action
+      return {
+        ...state,
+        followingInProgress: payload.inProgress
+      }
+    }
     default: return state;
   }
 }
@@ -110,7 +120,8 @@ type UsersActionTypes = FollowUserACType |
                         ShowMoreUsersACType |
                         SetCurrentPageACType |
                         SetTotalUsersCountACType |
-                        ChangeIsFetchingStatusACType
+                        ChangeIsFetchingStatusACType |
+                        ChangeFollowingInProgressACType
 
 export type SetUsersACType = ReturnType<typeof setUsersAC>
 export const setUsersAC = (users:  UserType[]) => {
@@ -182,3 +193,14 @@ export const changeIsFetchingStatusAC = (isFetching: boolean) => {
     }
   } as const
 }
+
+export type ChangeFollowingInProgressACType = ReturnType<typeof changeFollowingInProgressAC>
+export const changeFollowingInProgressAC = (inProgress: boolean) => {
+  return {
+    type: CHANGE_FOLLOWING_IN_PROGRESS,
+    payload: {
+      inProgress
+    }
+  } as const
+}
+
