@@ -33,7 +33,7 @@ export const MyPosts: FC<MyPostsProps> = ({posts, newPostText, ...props}) => {
         <>
             <div className={S.posts}>
                 <h3>My posts</h3>
-                <textarea ref={inputRef} value={newPostText} id="postText" name="postText" placeholder="Write a post..." onChange={onPostChange}/>
+                <textarea ref={inputRef} value={newPostText} id='postText' name='postText' placeholder='Write a post...' onChange={onPostChange}/>
                 <button onClick={onClickAddPost}>Send</button>
             </div>
             <div className={S.postItems}>

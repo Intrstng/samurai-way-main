@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { ProfileStateType, ProfileType, setUserProfileAC } from '../../redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router-dom';
+import { profileAPI } from '../../api/api';
 
 
 export const Profile = (props: ProfileAPIContainerProps) => {
@@ -24,14 +25,11 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerProp
     let userId = this.props.match.params.userId; // is taken from router params (thanks to WithUrlDataContainerComponent = withRouter(ProfileAPIContainer) - it gives access to router params)
 
     if (!userId) {
-      userId = '2';
+      userId = '2'; // OPENS PAGE BY DEFAULT
     }
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
-      )
-      .then((response) => {
-       this.props.setUserProfile(response.data);
+    profileAPI.getUsersProfile(userId)
+      .then((data) => {
+       this.props.setUserProfile(data);
       });
   }
 

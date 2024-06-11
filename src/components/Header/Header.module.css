@@ -1,6 +1,6 @@
 .header {
     grid-area: h;
-    padding: 15px 45px 15px 25px;
+    padding: 25px 45px 25px 25px;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -22,7 +22,7 @@ a {
     font-size: 1.1rem;
     font-weight: bold;
     letter-spacing: 1px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .loginName {
@@ -34,4 +34,18 @@ a {
 
 .active {
     color: rgb(255, 255, 255);
+}
+
+.loggedUsersInfo {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.loggedUsersInfo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }

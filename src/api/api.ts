@@ -9,12 +9,14 @@ const instance = axios.create({
     }
 })
 
+
 export const usersAPI = {
     async getUsers(pageSize: number, page: number) {
         try {
-            return await instance.get(
+            const response = await instance.get(
                 `users?count=${pageSize}&page=${page}`
-            ).then(response => response.data);
+            )
+            return response.data;
         } catch (error) {
             console.error('Error getting users:', error);
             throw error;
@@ -22,9 +24,10 @@ export const usersAPI = {
     },
     async followUser(userId: string) {
         try {
-            return await instance.post(
+            const response = await instance.post(
                 `follow/${userId}`
-            ).then(response => response.data);
+            )
+            return response.data;
         } catch (error) {
             console.error('Error following user:', error);
             throw error;
@@ -32,12 +35,41 @@ export const usersAPI = {
     },
     async unfollowUser(userId: string) {
         try {
-            return await instance.delete(
+            const response = await instance.delete(
                 `follow/${userId}`
-            ).then(response => response.data);
+            )
+            return response.data;
         } catch (error) {
             console.error('Error unfollowing user:', error);
             throw error;
         }
-    }
+    },
+}
+
+export const userAuthAPI = {
+    async authUser() {
+        try {
+            const response = await instance.get(
+                `auth/me`
+            )
+            return response.data;
+        } catch (error) {
+            console.error('Error user`s authorisation:', error);
+            throw error;
+        }
+    },
+}
+
+export const profileAPI = {
+    async getUsersProfile(userId: string) {
+        try {
+            const response = await instance.get(
+                `profile/${userId}`,
+            )
+            return response.data;
+        } catch (error) {
+            console.error('Error user`s authorisation:', error);
+            throw error;
+        }
+    },
 }
