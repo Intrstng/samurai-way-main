@@ -11,7 +11,7 @@ import {
     ProfileType,
     setUserProfileAC
 } from '../../redux/profile-reducer';
-import { withRouter } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router-dom';
 import { profileAPI } from '../../api/api';
 
@@ -32,26 +32,35 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerProp
 
     getCurrentUserProfile() {
         let userId = this.props.match.params.userId; // is taken from router params (thanks to WithUrlDataContainerComponent = withRouter(ProfileAPIContainer) - it gives access to router params)
+        if (!userId) {
+            userId = '2'; // OPENS PAGE BY DEFAULT
+        }
         this.props.getCurrentUserProfile(userId);
     }
 
     render() {
+        if (!this.props.isCurrentUserAuthorized) {
+            return <Redirect to={'/login'}/>
+        }
+
         return <Profile {...this.props} profile={this.props.profile}/>
     }
 }
 
 type ProfileMapStateToPropsType = {
     profile: ProfileType
+    isCurrentUserAuthorized: boolean
 }
 
 let mapStateToProps = (state: AppRootStateType): ProfileMapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
+        isCurrentUserAuthorized: state.auth.isAuth,
     }
 }
 
 type ProfileMapDispatchToPropsType = {
-    getCurrentUserProfile: (userId: string | undefined) => void
+    getCurrentUserProfile: (userId: string) => void
 }
 
 

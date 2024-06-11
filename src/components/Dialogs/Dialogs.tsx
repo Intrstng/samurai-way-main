@@ -4,6 +4,7 @@ import {DialogItem} from './DialogItem/DialogItem';
 import {Message} from './Message/Message';
 import {DialogsItem, MessageItem} from '../../redux/state';
 import { DialogsPropsType } from './DialogsContainer';
+import { Redirect } from 'react-router-dom';
 
 // type DialogsProps = {
 //     dialogs: DialogsItem[]
@@ -16,6 +17,7 @@ import { DialogsPropsType } from './DialogsContainer';
 export const Dialogs: FC<DialogsPropsType> = ({dialogs,
                                            messages,
                                            newMessageBody,
+                                           isCurrentUserAuthorized,
                                            ...props}) => {
 
 
@@ -31,6 +33,10 @@ export const Dialogs: FC<DialogsPropsType> = ({dialogs,
     const onClickHandlerSendMessage = () => {
         props.onClickSendMessage();
     };
+
+    if (!isCurrentUserAuthorized) {
+        return <Redirect to={'/login'}/>
+    }
 
     return (
         <div className={S.dialogs}>
