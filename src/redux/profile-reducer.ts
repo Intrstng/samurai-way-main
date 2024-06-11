@@ -1,5 +1,8 @@
 import {v1} from 'uuid';
 import {ActionTypes, PostItem} from './state';
+import { Dispatch } from 'redux';
+import { profileAPI, usersAPI } from '../api/api';
+import { changeIsFetchingStatusAC, getUsersThunkCreator, setTotalUsersCountAC, setUsersAC } from './users-reducer';
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
@@ -121,4 +124,20 @@ export const setUserProfileAC = (profile: ProfileType) => {
             profile
         }
     } as const
+}
+
+
+// THUNK CREATORS
+
+export const getCurrentUserProfileThunkCreator = (userId: string | undefined) => {
+    return (dispatch: Dispatch) => {
+        let userIdInner = userId;
+        if (!userIdInner) {
+            userIdInner = '2'; // OPENS PAGE BY DEFAULT
+        }
+        profileAPI.getUsersProfile(userIdInner)
+            .then((data) => {
+                dispatch(setUserProfileAC(data));
+            });
+    }
 }

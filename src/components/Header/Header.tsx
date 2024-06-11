@@ -13,7 +13,6 @@ export const Header: FC<HeaderAuthProps> = (props) => {
                                                        : defaultAuthedUsersAvatar} alt={'User`s avatar'}/>
                            </div>
 
-
     return (
         <header className={S.header}>
             <img width="58" height="58"
