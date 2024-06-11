@@ -9,11 +9,12 @@ type UsersPresentationComponentType = {
   totalUsersCount: number
   currentPage: number
   pageSize: number
+  isAuthorized: boolean
   followingInProgress: string[]
   followUser: (userId: string) => void;
   unfollowUser: (userId: string) => void;
   fetchUsers: (page: number) => void
-  fetchUsersForShowMore: (pageSize: number, page: number) => void
+  fetchUsersForShowMore: (page: number) => void
   setCurrentPage: (page: number) => void
 }
 
@@ -58,7 +59,7 @@ export const UsersPresentationComponent: FC<UsersPresentationComponentType> = (p
   };
 
   const onClickShowMoreUsersHandler = () => {
-    props.fetchUsersForShowMore(props.pageSize, props.currentPage + 1);
+    props.fetchUsersForShowMore(props.currentPage + 1);
   }
 
   return (

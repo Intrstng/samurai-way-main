@@ -22,9 +22,9 @@ export const User: FC<UserProps> = ({
                                       status,
                                       followed,
                                       avatar,
+                                      followingInProgressFlag,
                                       followUser,
                                       unfollowUser,
-                                      followingInProgressFlag
 }) => {
   const onClickToggleFollowStatus = () => followed
                                           ? unfollowUser(userId)
