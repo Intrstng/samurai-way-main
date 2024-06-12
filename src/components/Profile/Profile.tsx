@@ -1,19 +1,11 @@
 import React from 'react';
 import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
-import axios from 'axios';
 import { AppRootStateType } from '../../redux/redux-store';
-import { changeIsFetchingStatusAC, UserStateType } from '../../redux/users-reducer';
 import { connect } from 'react-redux';
-import {
-    getCurrentUserProfileThunkCreator,
-    ProfileStateType,
-    ProfileType,
-    setUserProfileAC
-} from '../../redux/profile-reducer';
-import { Redirect, withRouter } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router-dom';
-import { profileAPI } from '../../api/api';
+import { getCurrentUserProfileThunkCreator, ProfileType } from '../../redux/profile-reducer';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
 
 
 export const Profile = (props: ProfileAPIContainerProps) => {
@@ -39,27 +31,22 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerProp
     }
 
     render() {
-        if (!this.props.isCurrentUserAuthorized) {
-            return <Redirect to={'/login'}/>
-        }
-
         return <Profile {...this.props} profile={this.props.profile}/>
     }
 }
 
-type ProfileMapStateToPropsType = {
+
+export type ProfileMapStateToPropsType = {
     profile: ProfileType
-    isCurrentUserAuthorized: boolean
 }
 
 let mapStateToProps = (state: AppRootStateType): ProfileMapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
-        isCurrentUserAuthorized: state.auth.isAuth,
     }
 }
 
-type ProfileMapDispatchToPropsType = {
+export type ProfileMapDispatchToPropsType = {
     getCurrentUserProfile: (userId: string) => void
 }
 
@@ -72,10 +59,6 @@ type ProfileAPIContainerProps = ProfileMapStateToPropsType &
 // It gives access to router params in class component
 let WithUrlDataContainerComponent = withRouter(ProfileAPIContainer) // To have access to URL router params we are wrapping ProfileAPIContainer in HOC withRouter()
 
-
-// export const ProfileContainer = connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, { userId?: string }, AppRootStateType>(mapStateToProps,  {
-//   setUserProfile: setUserProfileAC,
-// })(WithUrlDataContainerComponent)
-export const ProfileContainer = connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+export const ProfileContainer = WithAuthRedirect(connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
     getCurrentUserProfile: getCurrentUserProfileThunkCreator,
-})(WithUrlDataContainerComponent)
+})(WithUrlDataContainerComponent))
