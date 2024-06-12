@@ -74,7 +74,7 @@ export const getAuthUserDataThunkCreator = () => {
     return (dispatch: Dispatch) => {
         userAuthAPI.authUser()
             .then((response) => {
-                if (response.resultCode === 0) { // 0 - means that Authorization is successful
+                if (response.resultCode === 1) { // 0 - means that Authorization is successful
                     dispatch(setAuthUserDataAC(response.data)); // {userId (id), email, login}
 
                     // Set avatar from loaded current users profile to users auth data
