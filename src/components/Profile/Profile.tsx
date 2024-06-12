@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { getCurrentUserProfileThunkCreator, ProfileType } from '../../redux/profile-reducer';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
+import { compose } from 'redux';
+import { sendMessageAC, updateNewMessageBodyAC } from '../../redux/dialogs-reducer';
+import { Dialogs } from '../Dialogs/Dialogs';
 
 
 export const Profile = (props: ProfileAPIContainerProps) => {
@@ -56,9 +59,21 @@ type ProfileAPIContainerProps = ProfileMapStateToPropsType &
     ProfileMapDispatchToPropsType &
     RouteComponentProps<{ userId?: string }>;
 
-// It gives access to router params in class component
-let WithUrlDataContainerComponent = withRouter(ProfileAPIContainer) // To have access to URL router params we are wrapping ProfileAPIContainer in HOC withRouter()
 
-export const ProfileContainer = WithAuthRedirect(connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
-    getCurrentUserProfile: getCurrentUserProfileThunkCreator,
-})(WithUrlDataContainerComponent))
+// // Before:
+// // It gives access to router params in class component
+// let WithUrlDataContainerComponent = withRouter(ProfileAPIContainer) // To have access to URL router params we are wrapping ProfileAPIContainer in HOC withRouter()
+// export const ProfileContainer = WithAuthRedirect(connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+//     getCurrentUserProfile: getCurrentUserProfileThunkCreator,
+// })(WithUrlDataContainerComponent))
+
+
+// After:
+export default compose<React.ComponentType>(
+    connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+            getCurrentUserProfile: getCurrentUserProfileThunkCreator,
+        }),
+
+        withRouter,
+        WithAuthRedirect
+)(ProfileAPIContainer)

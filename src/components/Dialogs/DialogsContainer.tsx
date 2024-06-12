@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { AppRootStateType } from '../../redux/redux-store';
 import { DialogsItem, MessageItem } from '../../redux/state';
 import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
+import { compose } from 'redux';
 
 
 export type DialogsPropsType = DialogsMapStateToPropsType & DialogsMapDispatchToPropsType
@@ -29,8 +30,18 @@ type DialogsMapDispatchToPropsType = {
 }
 
 
-// updateNewMessageBodyAC is named as onNewMessageChange we can write property onNewMessageChange
-export const DialogsContainer = WithAuthRedirect(connect<DialogsMapStateToPropsType,DialogsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
-    onNewMessageChange: updateNewMessageBodyAC,
-    onClickSendMessage: sendMessageAC,
-})(Dialogs))
+// // Before:
+// export const DialogsContainer = WithAuthRedirect(connect<DialogsMapStateToPropsType,DialogsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+//     onNewMessageChange: updateNewMessageBodyAC,
+//     onClickSendMessage: sendMessageAC,
+// })(Dialogs))
+
+
+// After:
+export default compose<React.ComponentType>(
+    connect<DialogsMapStateToPropsType,DialogsMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+            onNewMessageChange: updateNewMessageBodyAC,
+            onClickSendMessage: sendMessageAC,
+        }),
+        WithAuthRedirect
+)(Dialogs)

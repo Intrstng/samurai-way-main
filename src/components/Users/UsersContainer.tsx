@@ -18,6 +18,11 @@ import {
 } from '../../redux/users-reducer';
 import { UsersPresentationComponent } from './UsersPresentationComponent';
 import { Preloader } from '../Preloader/Preloader';
+import { compose } from 'redux';
+import { getCurrentUserProfileThunkCreator } from '../../redux/profile-reducer';
+import { withRouter } from 'react-router-dom';
+import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
+import { ProfileAPIContainer, ProfileMapDispatchToPropsType, ProfileMapStateToPropsType } from '../Profile/Profile';
 
 
 export class UsersAPIComponent extends React.Component<UsersProps, {}> {
@@ -93,11 +98,24 @@ export type UsersMapDispatchToPropsType = {
 }
 
 // setUsersAC is named as setUsers we can write property setUsers
-export const UsersContainer = connect<UserMapStateToProps, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
-    setCurrentPage: setCurrentPageAC,
+// export const UsersContainer = connect<UserMapStateToProps, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+//     setCurrentPage: setCurrentPageAC,
+//
+//     getUsers: getUsersThunkCreator,
+//     getUsersForShowMore: getUsersForShowMoreThunkCreator,
+//     setUserAsFollowedAtServerAndSetFollowedInUserState: setUserAsFollowedAtServerAndSetFollowedInUserStateThunkCreator,
+//     setUserAsUnFollowedAtServerAndSetUnFollowedInUserState: setUserAsUnFollowedAtServerAndSetUnFollowedInUserStateThunkCreator,
+// })(UsersAPIComponent)
 
-    getUsers: getUsersThunkCreator,
-    getUsersForShowMore: getUsersForShowMoreThunkCreator,
-    setUserAsFollowedAtServerAndSetFollowedInUserState: setUserAsFollowedAtServerAndSetFollowedInUserStateThunkCreator,
-    setUserAsUnFollowedAtServerAndSetUnFollowedInUserState: setUserAsUnFollowedAtServerAndSetUnFollowedInUserStateThunkCreator,
-})(UsersAPIComponent)
+
+export default compose<React.ComponentType>(
+    connect<UserMapStateToProps, UsersMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
+        setCurrentPage: setCurrentPageAC,
+
+        getUsers: getUsersThunkCreator,
+        getUsersForShowMore: getUsersForShowMoreThunkCreator,
+        setUserAsFollowedAtServerAndSetFollowedInUserState: setUserAsFollowedAtServerAndSetFollowedInUserStateThunkCreator,
+        setUserAsUnFollowedAtServerAndSetUnFollowedInUserState: setUserAsUnFollowedAtServerAndSetUnFollowedInUserStateThunkCreator,
+    }),
+    // WithAuthRedirect
+)(UsersAPIComponent)
