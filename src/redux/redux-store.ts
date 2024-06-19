@@ -5,6 +5,7 @@ import {dialogsReducer} from './dialogs-reducer';
 import { usersReducer } from './users-reducer';
 import { authReducer } from './auth-reducer';
 import thunkMiddleware from 'redux-thunk'; // импорт по дефолту (т.е. было: import thunk from 'redux-thunk';)
+import { reducer as formReducer } from 'redux-form'
 
 const rootReducer = combineReducers({
     profilePage: profileReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     usersPage: usersReducer,
     sidebar: sidebarReducer,
     auth: authReducer,
+    form: formReducer, // именно 'form'
 })
 
 export type AppRootStateType = ReturnType<typeof rootReducer>

@@ -1,0 +1,60 @@
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items:  center;
+    height: 100vh;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items:  flex-start;
+}
+
+.loginForm label:first-of-type {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.loginForm label {
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+
+.loginForm div {
+    display: flex;
+    align-items: center;
+}
+
+.loginForm input {
+    margin-bottom: 1rem;
+    padding: 0.6rem 0.8rem;
+    font-family: 'Arial';
+    font-size: 1rem;
+    letter-spacing: 1px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.loginForm input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.loginForm input[type="submit"] {
+    display: block;
+    padding: 6px 14px;
+    color: #FFFFFF;
+    background-color: green;
+    border: none;
+    cursor: pointer;
+    border-radius: unset;
+    margin: 0.5rem auto 0;
+}
