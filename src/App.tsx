@@ -20,9 +20,6 @@ export const App = () => {
                 <SidebarContainer/>
                     <div className={'content'}>
                         <Switch>
-                        {/*<Route path={'/profile'} component={Profile}/>*/}
-                        {/*<Route path={'/dialogs'} component={DialogsContainer}/>*/}
-
                         <Route path={'/login'} component={LoginPage}/>
                         <Route path={'/profile/:userId?'}
                                render={() => <ProfileContainer />}/>

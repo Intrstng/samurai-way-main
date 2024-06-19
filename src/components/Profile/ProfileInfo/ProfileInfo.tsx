@@ -3,12 +3,17 @@ import React, { FC } from 'react';
 import { ProfileType } from '../../../redux/profile-reducer';
 import defaultUserAvatar from '../../../assets/images/User_default-avatar.png';
 import { Preloader } from '../../Preloader/Preloader';
+import { ProfileStatus } from '../../ProfileStatus/ProfileStatus';
 
 type ProfileInfoProps = {
   profile: ProfileType
+  status: string
+  updateStatus: (status: string) => void
 }
 
-export const ProfileInfo: FC<ProfileInfoProps> = ({profile}) => {
+export const ProfileInfo: FC<ProfileInfoProps> = ({ profile,
+                                                    status,
+                                                    updateStatus }) => {
   if (!profile) {
     return <Preloader/>
   }
@@ -37,14 +42,16 @@ export const ProfileInfo: FC<ProfileInfoProps> = ({profile}) => {
         {contacts.twitter ? <p>Twitter: <a href={contacts.twitter} target={'_blank'}>{contacts.twitter}</a></p> : null}
         {contacts.mainLink ? <p>MainLink: <a href={contacts.mainLink} target={'_blank'}>{contacts.mainLink}</a></p> : null}
     </>
-
     return (
         <>
-            <img className={S.wallpaper} src={'https://live.staticflickr.com/6143/5956472201_d5ab929070_c.jpg'} alt={'nature'}/>
+            {/*<img className={S.wallpaper} src={'https://live.staticflickr.com/6143/5956472201_d5ab929070_c.jpg'} alt={'nature'}/>*/}
             <div className={S.descriptionBlock}>
                 <img className={S.avatarImg} src={photos.small ? photos.small : defaultUserAvatar} alt={'avatar'}/>
                 <div className={S.info}>
                     <p>{fullName}</p>
+                    <ProfileStatus status={status}
+                                   updateStatus={updateStatus}
+                    />
                     {lookingForAJobNode}
                     <p>About me: <span>{aboutMe}</span></p>
                     {contactsNode}

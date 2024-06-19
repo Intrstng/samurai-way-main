@@ -3,18 +3,24 @@ import { ProfileInfo } from './ProfileInfo/ProfileInfo';
 import { MyPostsContainer } from './MyPosts/MyPostsContainer';
 import { AppRootStateType } from '../../redux/redux-store';
 import { connect } from 'react-redux';
-import { getCurrentUserProfileThunkCreator, ProfileType } from '../../redux/profile-reducer';
+import {
+    getCurrentUserProfileThunkCreator,
+    getCurrentUserStatusThunkCreator,
+    ProfileType, updateCurrentUserStatusThunkCreator
+} from '../../redux/profile-reducer';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
 import { compose } from 'redux';
-import { sendMessageAC, updateNewMessageBodyAC } from '../../redux/dialogs-reducer';
-import { Dialogs } from '../Dialogs/Dialogs';
 
 
 export const Profile = (props: ProfileAPIContainerProps) => {
+
     return (
         <>
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile}
+                         status={props.status}
+                         updateStatus={props.updateCurrentUserStatus}
+            />
             <MyPostsContainer/>
         </>
     );
@@ -22,35 +28,48 @@ export const Profile = (props: ProfileAPIContainerProps) => {
 
 export class ProfileAPIContainer extends React.Component<ProfileAPIContainerProps, {}> {
     componentDidMount() {
-        this.getCurrentUserProfile();
+        this.getCurrentUserProfileAndStatus();
     }
 
-    getCurrentUserProfile() {
+    getCurrentUserProfileAndStatus() {
         let userId = this.props.match.params.userId; // is taken from router params (thanks to WithUrlDataContainerComponent = withRouter(ProfileAPIContainer) - it gives access to router params)
         if (!userId) {
             userId = '2'; // OPENS PAGE BY DEFAULT
         }
         this.props.getCurrentUserProfile(userId);
+        this.props.getCurrentUserStatus(userId);
+    }
+
+    updateCurrentUserStatus(status: string) {
+        this.props.updateCurrentUserStatus(status);
     }
 
     render() {
-        return <Profile {...this.props} profile={this.props.profile}/>
+        return <Profile {...this.props}
+                        profile={this.props.profile}
+                        status={this.props.status}
+                        updateCurrentUserStatus={this.props.updateCurrentUserStatus}
+        />
     }
 }
 
 
 export type ProfileMapStateToPropsType = {
     profile: ProfileType
+    status: string
 }
 
 let mapStateToProps = (state: AppRootStateType): ProfileMapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
+        status: state.profilePage.status
     }
 }
 
 export type ProfileMapDispatchToPropsType = {
     getCurrentUserProfile: (userId: string) => void
+    getCurrentUserStatus: (userId: string) => void
+    updateCurrentUserStatus: (status: string) => void
 }
 
 
@@ -71,9 +90,10 @@ type ProfileAPIContainerProps = ProfileMapStateToPropsType &
 // After:
 export default compose<React.ComponentType>(
     connect<ProfileMapStateToPropsType, ProfileMapDispatchToPropsType, {}, AppRootStateType>(mapStateToProps, {
-            getCurrentUserProfile: getCurrentUserProfileThunkCreator,
+            getCurrentUserProfile: getCurrentUserStatusThunkCreator,
+            getCurrentUserStatus: getCurrentUserProfileThunkCreator,
+            updateCurrentUserStatus: updateCurrentUserStatusThunkCreator
         }),
-
         withRouter,
         WithAuthRedirect
 )(ProfileAPIContainer)

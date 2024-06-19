@@ -1,0 +1,22 @@
+.status {
+    margin-bottom: 30px;
+    height: 15px;
+}
+
+.status__input {
+    background-color: rgba(255, 255, 255, 0.47);
+    border-radius: 5px;
+    border: none;
+    padding: 6px 10px;
+    max-width: 200px;
+    outline: none;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+}
+
+.status__text {
+    color: #316f7b;
+    font-family: 'Arial';
+    letter-spacing: 1px;
+    cursor: pointer;
+}

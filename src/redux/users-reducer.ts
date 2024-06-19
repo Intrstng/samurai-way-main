@@ -1,4 +1,4 @@
-import { usersAPI } from '../api/api';
+import { profileAPI, usersAPI } from '../api/api';
 import { Dispatch } from 'redux';
 
 const FOLLOW_USER = 'FOLLOW-USER';
