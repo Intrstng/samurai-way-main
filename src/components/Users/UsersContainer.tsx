@@ -2,27 +2,16 @@ import React from 'react';
 import { AppRootStateType } from '../../redux/redux-store';
 import { connect } from 'react-redux';
 import {
-    followUserAC,
     getUsersForShowMoreThunkCreator,
     getUsersThunkCreator,
     setCurrentPageAC,
-    setFollowingInProgressAC,
-    setTotalUsersCountAC,
     setUserAsFollowedAtServerAndSetFollowedInUserStateThunkCreator,
     setUserAsUnFollowedAtServerAndSetUnFollowedInUserStateThunkCreator,
-    setUsersAC,
-    showMoreUsersAC,
-    unfollowUserAC,
-    unSetFollowingInProgressAC,
     UserType
 } from '../../redux/users-reducer';
 import { UsersPresentationComponent } from './UsersPresentationComponent';
 import { Preloader } from '../Preloader/Preloader';
-import { compose } from 'redux';
-import { getCurrentUserProfileThunkCreator } from '../../redux/profile-reducer';
-import { withRouter } from 'react-router-dom';
-import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
-import { ProfileAPIContainer, ProfileMapDispatchToPropsType, ProfileMapStateToPropsType } from '../Profile/Profile';
+import { compose } from 'redux' ;
 
 
 export class UsersAPIComponent extends React.Component<UsersProps, {}> {

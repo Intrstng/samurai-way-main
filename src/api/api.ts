@@ -46,6 +46,8 @@ export const usersAPI = {
     }
 }
 
+
+
 export const userAuthAPI = {
     async authUser() {
         try {
@@ -60,11 +62,37 @@ export const userAuthAPI = {
     },
 }
 
+
+
 export const profileAPI = {
     async getUsersProfile(userId: string) {
         try {
             const response = await instance.get(
                 `profile/${userId}`,
+            )
+            return response.data;
+        } catch (error) {
+            console.error('Error user`s authorisation:', error);
+            throw error;
+        }
+    },
+    async getUsersStatus(userId: string) {
+        try {
+            const response = await instance.get(
+                `profile/status/${userId}`,
+            )
+            return response.data;
+        } catch (error) {
+            console.error('Error user`s authorisation:', error);
+            throw error;
+        }
+    },
+    async updateUsersStatus(status: string) {
+        try {
+            const response = await instance.put(
+                `profile/status`, {
+                    status: status,
+                }
             )
             return response.data;
         } catch (error) {

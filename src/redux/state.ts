@@ -1,5 +1,10 @@
 import {v1} from 'uuid';
-import { AddPostACType, profileReducer, SetUserProfileACType, UpdateNewPostTextACType } from './profile-reducer';
+import {
+    AddPostACType,
+    profileReducer,
+    SetUserProfileACType, SetUserStatusACType,
+    UpdateNewPostTextACType
+} from './profile-reducer';
 import {sidebarReducer} from './sidebar-reducer';
 import {AddMessageACType, dialogsReducer, UpdateNewMessageBodyACType} from './dialogs-reducer';
 import { UserStateType, UserType } from './users-reducer';
@@ -50,7 +55,8 @@ export type ActionTypes = AddPostACType |
                           UpdateNewPostTextACType |
                           UpdateNewMessageBodyACType |
                           AddMessageACType |
-                          SetUserProfileACType
+                          SetUserProfileACType |
+                          SetUserStatusACType
 
 
 type StoreType = {
