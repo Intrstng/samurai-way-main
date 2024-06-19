@@ -48,7 +48,7 @@ export class ProfileAPIContainer extends React.Component<ProfileAPIContainerProp
         return <Profile {...this.props}
                         profile={this.props.profile}
                         status={this.props.status}
-                        updateCurrentUserStatus={this.props.updateCurrentUserStatus}
+                        updateCurrentUserStatus={this.updateCurrentUserStatus}
         />
     }
 }
