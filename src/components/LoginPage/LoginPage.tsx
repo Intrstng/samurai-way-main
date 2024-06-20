@@ -1,11 +1,18 @@
-import React, { ReactNode } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { Redirect } from 'react-router-dom';
 import { WithAuthRedirect } from '../../hoc/WithAuthRedirect';
 import S from './LoginPage.module.css';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+
+
+type FormDataType = {
+    login: string
+    password: string
+    rememberMe: boolean
+}
 
 export const LoginPage = () => {
-    const onSubmitHandler = (formData: any) => {
+    const onSubmitHandler = (formData: FormDataType) => {
         console.log(formData)
     }
 
@@ -17,7 +24,7 @@ export const LoginPage = () => {
 };
 
 
-export const LoginForm = (props: any) => {
+export const LoginForm: FC<InjectedFormProps<FormDataType>> = (props) => {
     const { handleSubmit } = props
     return (
         <div className={S.loginPage}>
@@ -54,7 +61,7 @@ export const LoginForm = (props: any) => {
     );
 }
 
-const LoginReduxForm = reduxForm({
+const LoginReduxForm = reduxForm<FormDataType>({
     // a unique name for the form
     form: 'login'
 })(LoginForm)
